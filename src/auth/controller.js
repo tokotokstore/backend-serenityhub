@@ -103,16 +103,6 @@ async function logout(req, res, next) {
     message: 'Logout successfully',
   });
 }
-async function show(req, res, next) {
-  try {
-    const users = await User.find();
-    return res.send(users);
-  } catch (err) {
-    return res.json({
-      error: 1,
-    });
-  }
-}
 
 module.exports = {
   register,
