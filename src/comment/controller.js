@@ -2,9 +2,16 @@ const Comment = require('./model');
 const ReportUser = require('../reports/model');
 
 async function addComment(req, res, next) {
+  let user = req.user;
+
+  if (!user) {
+    return res.json({
+      error: 1,
+      message: `You're not not login or token expired`,
+    });
+  }
   try {
     const payload = req.body;
-    let user = req.user;
     let comment = new Comment({ ...payload, name: user.name });
     const commentReport = await ReportUser.findOneAndUpdate(
       { _id: req.params.id },
@@ -17,7 +24,10 @@ async function addComment(req, res, next) {
         message: 'comment added',
       });
     }
-    // return res.json(user);
+    return res.json({
+      error: 1,
+      message: `You're not not login or token expired`,
+    });
   } catch (err) {
     if (err && err.name === 'ValidationError') {
       return res.json({
@@ -31,6 +41,12 @@ async function addComment(req, res, next) {
 }
 
 async function deleteComment(req, res, next) {
+  if (!user) {
+    return res.json({
+      error: 1,
+      message: `You're not not login or token expired`,
+    });
+  }
   try {
     const payload = req.body;
     let user = req.user;
