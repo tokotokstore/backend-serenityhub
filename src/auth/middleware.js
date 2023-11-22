@@ -1,6 +1,7 @@
 const { getToken } = require('../utils/getToken');
 const jwt = require('jsonwebtoken');
 const User = require('../user/model');
+const config = require('../config');
 
 function decodeToken() {
   return async function (req, res, next) {
@@ -8,10 +9,10 @@ function decodeToken() {
       let token = getToken(req);
       //   jika request tidak memiliki token maka
       if (!token) return next();
-      req.user = jwt.verify(token, '');
+      req.user = jwt.verify(token, config.secretKey);
 
       let user = await User.findOne({ token: { $in: [token] } }).select(
-        '-__v -createdAt -updatedAt -token -password',
+        '-__v -createdAt -updatedAt -car_items  -token -password',
       );
       if (!user) {
         return res.json({
