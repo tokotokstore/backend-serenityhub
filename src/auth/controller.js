@@ -1,15 +1,21 @@
-const User = require('./model');
+const User = require('../user/model');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const { getToken } = require('../utils/getToken');
 
 async function register(req, res, next) {
   try {
     const payload = req.body;
     let user = new User(payload);
     await user.save();
-
-    return res.json(user);
+    if (user) {
+      return res.json({
+        status: 'ok',
+        message: 'register successfuly',
+      });
+    }
+    // return res.json(user);
   } catch (err) {
     if (err && err.name === 'ValidationError') {
       return res.json({
@@ -26,7 +32,7 @@ async function localStrategy(email, password, done) {
   try {
     let user = await User.findOne({
       email,
-    }).select('-__v -createdAt -updatedAt  -token');
+    }).select(' -_id -__v  -createdAt -updatedAt  -token');
 
     if (!user) return done();
     if (bcrypt.compareSync(password, user.password)) {
@@ -59,6 +65,7 @@ async function login(req, res, next) {
       { new: true },
     );
     return res.json({
+      status: 'ok',
       message: 'logged in successfully',
       user: user,
       token: signed,
@@ -66,6 +73,36 @@ async function login(req, res, next) {
   })(req, res, next);
 }
 
+function me(req, res, next) {
+  console.log(req);
+  if (!req.user) {
+    return res.json({
+      error: 1,
+      message: `You're not not login or token expired`,
+    });
+  }
+  return res.json(req.user);
+}
+
+async function logout(req, res, next) {
+  let token = getToken(req);
+  const user = await User.findOneAndUpdate(
+    { token: { $in: [token] } },
+    { $pull: { token } },
+    { useFindAndModify: false },
+  );
+  if (!user || !token) {
+    return res.json({
+      error: 1,
+      message: 'No user found',
+    });
+  }
+
+  return res.json({
+    error: 0,
+    message: 'Logout successfully',
+  });
+}
 async function show(req, res, next) {
   try {
     const users = await User.find();
@@ -82,4 +119,6 @@ module.exports = {
   show,
   localStrategy,
   login,
+  me,
+  logout,
 };

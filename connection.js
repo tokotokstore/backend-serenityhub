@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 mongoose.set('strictQuery', false);
 const mongodbAtlas = 'link mongodb atlas'
+
 const localConnection =
   'mongodb://localhost:27017/serenity?authSource=admin';
 
