@@ -54,7 +54,6 @@ userSchema.path('email').validate(
 );
 
 userSchema.pre('save', function(next) {
-  console.log(this.password);
   this.password = bcrypt.hashSync(this.password, HASH_ROUND);
   next();
 });
