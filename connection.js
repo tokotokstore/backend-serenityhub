@@ -1,12 +1,22 @@
 const mongoose = require('mongoose');
+const config = require('./src/config');
+const {
+  dbHost,
+  dbName,
+  dbPassword,
+  dbPort,
+  dbUser,
+  maUser,
+  maPassword,
+  maServer,
+} = config;
 
 mongoose.set('strictQuery', false);
-const mongodbAtlas = 'link mongodb atlas'
+const mongodbAtlas = `mongodb://${maUser}:${maPassword}@${maServer}/${dbName}?replicaSet=atlas-munim4-shard-0&ssl=true&authSource=admin`;
 
-const localConnection =
-  'mongodb://localhost:27017/serenity?authSource=admin';
+const localConnection = `mongodb://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}?authSource=admin`;
 
-mongoose.connect(localConnection, {
+mongoose.connect(mongodbAtlas, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

@@ -18,9 +18,9 @@ const accessLogStream = fs.createWriteStream(
 //   next();
 // });
 // app.use(morgan('combined', { stream: accessLogStream }));
+app.use(decodeToken());
+
 app.use(authRouter);
 app.use(routers);
-
-app.use(decodeToken);
 
 app.listen(port, () => console.log(`server running at ${port}`));
