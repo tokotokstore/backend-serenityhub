@@ -5,8 +5,13 @@ const path = require('path');
 const routers = require('./src/routes');
 const app = express();
 const createError = require('http-errors');
+
 const port = 5500;
+
 const authRouter = require('./src/auth/router');
+const commentRouter = require('./src/comment/router');
+const reportRouter = require('./src/reports/router');
+
 const { decodeToken } = require('./src/auth/middleware');
 
 const accessLogStream = fs.createWriteStream(
@@ -21,6 +26,8 @@ const accessLogStream = fs.createWriteStream(
 app.use(decodeToken());
 
 app.use(authRouter);
+app.use(commentRouter);
+app.use(reportRouter);
 app.use(routers);
 
 app.listen(port, () => console.log(`server running at ${port}`));
