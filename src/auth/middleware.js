@@ -8,7 +8,7 @@ function decodeToken() {
       let token = getToken(req);
       //   jika request tidak memiliki token maka
       if (!token) return next();
-      req.user = jwt.verify(token, 'SECRETKEY');
+      req.user = jwt.verify(token, '');
 
       let user = await User.findOne({ token: { $in: [token] } }).select(
         '-__v -createdAt -updatedAt -token -password',
