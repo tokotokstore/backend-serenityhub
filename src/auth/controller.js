@@ -47,33 +47,6 @@ async function localStrategy(email, password, done) {
   done();
 }
 
-// async function login(req, res, next) {
-//   passport.authenticate('local', async function (err, user) {
-//     if (err) return next(err);
-//     if (!user)
-//       return res.json({
-//         error: 1,
-//         message: 'email or password incorrect',
-//       });
-//     // Change secret key
-//     let signed = jwt.sign(user, config.secretKey);
-//     await User.findOneAndUpdate(
-//       { _id: user._id },
-//       // agar bisa input token lebih dari satu, sehingga user bisa login perangkat yang berbeda
-//            { $push: { token: signed } },
-//       //  hanya bisa login di satu perangkat, karena token hanya 1 saja
-//       // { $set: { token: signed } },
-//       { new: true },
-//     );
-//     return res.json({
-//       status: 'ok',
-//       message: 'logged in successfully',
-//       user: user,
-//       token: signed,
-//     });
-//   })(req, res, next);
-// }
-
 async function login(req, res, next) {
   passport.authenticate('local', async function (err, user) {
     if (err) return next(err);
@@ -129,16 +102,6 @@ async function logout(req, res, next) {
     error: 0,
     message: 'Logout successfully',
   });
-}
-async function show(req, res, next) {
-  try {
-    const users = await User.find();
-    return res.send(users);
-  } catch (err) {
-    return res.json({
-      error: 1,
-    });
-  }
 }
 
 module.exports = {
