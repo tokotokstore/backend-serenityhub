@@ -55,7 +55,7 @@ async function login(req, res, next) {
         message: 'email or password incorrect',
       });
     // Change secret key
-    let signed = jwt.sign(user, 'SECRETKEY');
+    let signed = jwt.sign(user, '');
     await User.findOneAndUpdate(
       { _id: user._id },
       // agar bisa input token lebih dari satu, sehingga user bisa login perangkat yang berbeda
