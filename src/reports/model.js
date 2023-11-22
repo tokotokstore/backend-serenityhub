@@ -29,9 +29,12 @@ const reportSchema = Schema(
     status: {
       type: String,
       enum: ['accepted', 'process', 'done', 'rejecected'],
-      default: ['accepted'],
+      default: "accepted",
     },
     imageReport: [String],
+    user:{
+      type: Schema.Types.ObjectId
+    },
     imageFinished: [String],
     officer: {
       type: Schema.Types.ObjectId,

@@ -7,10 +7,12 @@ Teknologi yang digunakan :
 1. Express
 2. Mongoose
 
-## Cara pakai
+## Cara install
 
-1. npm install
-2. settings databas in connections.js
+1. masukkan file .env di root folder
+2. npm install
+3. npm run dev
+   > server berjalan di port 5500, pastikan port tidak terpakai. Port bisa diganti di index.js
 
 ## API
 
@@ -69,12 +71,111 @@ Teknologi yang digunakan :
 }
 ```
 
-- Fail Response:
+- Response Fail:
 
 ```json
 {
   "error": 1,
   "message": "No user found"
+}
+```
+
+### Report
+> fitur masih sederhana, 
+
+- URL : /report
+- Method : POST
+- Request Header:
+  - Authorization : 'Bearer {token}'
+- Request Body  :
+  - title as string
+  - description as string
+  - address as string
+  - longitude as string
+  - latitude as string
+- Response:
+
+```json
+{
+    "status": "ok",
+    "message": "Report berhasil dibuat",
+    "data": "655e0f1cd6070a1f3e8d90c3"
+}
+```
+
+- URL : /report
+- Method : GET
+- Response:
+
+```json
+{
+  "status": "ok",
+  "data": [
+    {
+      "status": "accepted",
+      "imageReport": [],
+      "_id": "655de8a5739a37314d7781f0",
+      "judul": "pohon rubuh",
+      "description": "terjadi pohon rubuh"
+    },
+    {
+      "_id": "655df6b6e876881d293b0bea",
+      "title": "Banyak sampah",
+      "description": "Sampah menumpuk di perumahan ABC",
+      "status": "accepted",
+      "imageReport": [],
+      "user": "655dd130af1f0cfe7cdb02d1",
+      "__v": 0
+    },
+    {
+      "_id": "655df76ec5dedaff680e80b5",
+      "title": "Banyak sampah",
+      "description": "Sampah menumpuk di perumahan ABC",
+      "status": "accepted",
+      "imageReport": [],
+      "user": "655dd130af1f0cfe7cdb02d1",
+      "__v": 0
+    }
+  ]
+}
+```
+
+- URL : /report/idreport
+- Method : GET
+Request Header:
+  - Authorization : 'Bearer {token}'
+- Response:
+
+```json
+{
+  "status": "ok",
+  "data": [
+    {
+      "status": "accepted",
+      "imageReport": [],
+      "_id": "655de8a5739a37314d7781f0",
+      "judul": "pohon rubuh",
+      "description": "terjadi pohon rubuh"
+    },
+    {
+      "_id": "655df6b6e876881d293b0bea",
+      "title": "Banyak sampah",
+      "description": "Sampah menumpuk di perumahan ABC",
+      "status": "accepted",
+      "imageReport": [],
+      "user": "655dd130af1f0cfe7cdb02d1",
+      "__v": 0
+    },
+    {
+      "_id": "655df76ec5dedaff680e80b5",
+      "title": "Banyak sampah",
+      "description": "Sampah menumpuk di perumahan ABC",
+      "status": "accepted",
+      "imageReport": [],
+      "user": "655dd130af1f0cfe7cdb02d1",
+      "__v": 0
+    }
+  ]
 }
 ```
 
@@ -95,7 +196,7 @@ Teknologi yang digunakan :
 }
 ```
 
-- Fail Response:
+- Response Fail:
 
 ```json
 {
