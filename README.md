@@ -77,3 +77,42 @@ Teknologi yang digunakan :
   "message": "No user found"
 }
 ```
+
+### Comment
+
+- URL : /comment/:id
+- Method : POST
+- Request Header:
+  - Authorization : 'Bearer {token}'
+- Request body:
+  - message as string
+- Response:
+
+```json
+{
+  "status": "ok",
+  "message": "comment added"
+}
+```
+
+- Fail Response:
+
+```json
+{
+  "error": 1,
+  "message": "Comment validation failed: message: pesan harus ada",
+  "fields": {
+    "message": {
+      "name": "ValidatorError",
+      "message": "pesan harus ada",
+      "properties": {
+        "message": "pesan harus ada",
+        "type": "required",
+        "path": "message"
+      },
+      "kind": "required",
+      "path": "message"
+    }
+  }
+}
+```

@@ -106,7 +106,6 @@ async function logout(req, res, next) {
 
 module.exports = {
   register,
-  show,
   localStrategy,
   login,
   me,

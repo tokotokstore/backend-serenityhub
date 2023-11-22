@@ -10,8 +10,6 @@ async function addComment(req, res, next) {
       { _id: req.params.id },
       { $push: { comment: comment._id } },
     );
-    console.log(comment);
-    console.log(commentReport);
     await comment.save();
     if (comment) {
       return res.json({
