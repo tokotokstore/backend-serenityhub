@@ -1,0 +1,23 @@
+{
+  "name": "backend-serenitylink",
+  "version": "1.0.0",
+  "description": "> Capstone Project C523-PR086",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dkwhyd/backend-serenitylink.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dkwhyd/backend-serenitylink/issues"
+  },
+  "homepage": "https://github.com/dkwhyd/backend-serenitylink#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
