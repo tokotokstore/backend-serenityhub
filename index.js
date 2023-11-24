@@ -28,4 +28,3 @@ app.use(reportRouter);
 app.use(routers);
 
 app.listen(port, () => console.log(`server running at ${port}`));
-module.exports = app;
