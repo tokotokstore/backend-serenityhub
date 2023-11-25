@@ -20,6 +20,8 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'),
 //   next();
 // });
 // app.use(morgan('combined', { stream: accessLogStream }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(decodeToken());
 
 app.use(authRouter);
@@ -27,4 +29,5 @@ app.use(commentRouter);
 app.use(reportRouter);
 app.use(routers);
 
-app.listen(port, () => console.log(`server running at ${port}`));
+const server = app.listen(port, () => console.log(`server running at ${port}`));
+module.exports = server;
