@@ -18,6 +18,8 @@ Teknologi yang digunakan :
 
 ### Register
 
+#### User Register
+
 - URL : /register
 - Method : POST
 - Request Body:
@@ -33,7 +35,19 @@ Teknologi yang digunakan :
 }
 ```
 
+#### Officer or Admin register
+
+- URL : /officer/login
+- Method : POST
+- Request Body:
+  - name as string
+  - email as string
+  - password as string
+- Response: same User login
+
 ### Login
+
+#### User Login
 
 - URL : /login
 - Method : POST
@@ -248,9 +262,6 @@ Teknologi yang digunakan :
 - Method : DELETE
 - Request Header:
   - Authorization : 'Bearer {token}'
-- Request file:
-  - image as object
-  - In postman menu: body->form-data and key : image type file
 - Response:
 
 ```json

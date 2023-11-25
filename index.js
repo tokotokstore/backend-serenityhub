@@ -17,6 +17,7 @@ const authRouter = require('./src/auth/router');
 const commentRouter = require('./src/comment/router');
 const reportRouter = require('./src/reports/router');
 const uploadImage = require('./src/image/uploadImage');
+const officerReportRouter = require('./src/officerReport/router');
 
 const { decodeToken } = require('./src/auth/middleware');
 
@@ -37,6 +38,7 @@ app.use(commentRouter);
 app.use(reportRouter);
 app.use(routers);
 app.use(uploadImage);
+app.use(officerReportRouter);
 
 const server = app.listen(port, () => console.log(`server running at ${port}`));
 module.exports = server;
