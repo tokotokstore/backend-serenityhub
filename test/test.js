@@ -9,10 +9,8 @@ chai.use(chaiHttp);
 
 let token;
 
-describe('API Endpoints', function () {
-  this.timeout(50000); // mengatur waktu tunggu menjadi 5000ms
-
-  // Tes endpoint /register
+describe('API Endpoints', () => {
+  // Test /register endpoint
   describe('/POST register', () => {
     it('it should register a user', (done) => {
       let user = {
@@ -50,90 +48,90 @@ describe('API Endpoints', function () {
     });
   });
 
-  // describe('API Endpoints', () => {
-  //   // Test /login endpoint
-  //   describe('/POST login', () => {
-  //     it('it should login a user', (done) => {
-  //       let user = {
-  //         email: 'testuser@gmail.com',
-  //         password: 'password',
-  //       };
-  //       chai
-  //         .request(server)
-  //         .post('/login')
-  //         .send(user)
-  //         .end((err, res) => {
-  //           let errors = [];
-  //           if (res.body.error) {
-  //             errors.push(`Terjadi kesalahan: ${res.body.message}`);
-  //           } else {
-  //             if (res.body.message === undefined) {
-  //               errors.push('Properti message tidak ada dalam respons');
-  //             } else if (res.body.message !== 'logged in successfully') {
-  //               errors.push(`Properti message dalam respons bukan "logged in successfully", tetapi "${res.body.message}"`);
-  //             }
-  //             if (res.body.token === undefined) {
-  //               errors.push('Properti token tidak ada dalam respons');
-  //             }
-  //             if (res.body.user === undefined) {
-  //               errors.push('Properti user tidak ada dalam respons');
-  //             } else {
-  //               if (res.body.user.name === undefined) {
-  //                 errors.push('Properti name tidak ada dalam user');
-  //               }
-  //               if (res.body.user.email === undefined) {
-  //                 errors.push('Properti email tidak ada dalam user');
-  //               }
-  //               if (res.body.user.role === undefined) {
-  //                 errors.push('Properti role tidak ada dalam user');
-  //               }
-  //               if (res.body.user.customer_id === undefined) {
-  //                 errors.push('Properti customer_id tidak ada dalam user');
-  //               }
-  //             }
-  //           }
-  //           if (errors.length > 0) {
-  //             console.log(errors.join('\n'));
-  //           } else {
-  //             console.log('- test Login berhasil');
-  //           }
-  //           token = res.body.token;
-  //           done();
-  //         });
-  //     });
-  //   });
-  // });
+  describe('API Endpoints', () => {
+    // Test /login endpoint
+    describe('/POST login', () => {
+      it('it should login a user', (done) => {
+        let user = {
+          email: 'testuser@gmail.com',
+          password: 'password',
+        };
+        chai
+          .request(server)
+          .post('/login')
+          .send(user)
+          .end((err, res) => {
+            let errors = [];
+            if (res.body.error) {
+              errors.push(`Terjadi kesalahan: ${res.body.message}`);
+            } else {
+              if (res.body.message === undefined) {
+                errors.push('Properti message tidak ada dalam respons');
+              } else if (res.body.message !== 'logged in successfully') {
+                errors.push(`Properti message dalam respons bukan "logged in successfully", tetapi "${res.body.message}"`);
+              }
+              if (res.body.token === undefined) {
+                errors.push('Properti token tidak ada dalam respons');
+              }
+              if (res.body.user === undefined) {
+                errors.push('Properti user tidak ada dalam respons');
+              } else {
+                if (res.body.user.name === undefined) {
+                  errors.push('Properti name tidak ada dalam user');
+                }
+                if (res.body.user.email === undefined) {
+                  errors.push('Properti email tidak ada dalam user');
+                }
+                if (res.body.user.role === undefined) {
+                  errors.push('Properti role tidak ada dalam user');
+                }
+                if (res.body.user.customer_id === undefined) {
+                  errors.push('Properti customer_id tidak ada dalam user');
+                }
+              }
+            }
+            if (errors.length > 0) {
+              console.log(errors.join('\n'));
+            } else {
+              console.log('- test Login berhasil');
+            }
+            token = res.body.token;
+            done();
+          });
+      });
+    });
+  });
 
-  // describe('API Endpoints', () => {
-  //   // Test /logout endpoint
-  //   describe('/POST logout', () => {
-  //     it('it should logout a user', (done) => {
-  //       chai
-  //         .request(server)
-  //         .post('/logout')
-  //         .set('Authorization', 'Bearer ' + token)
-  //         .end((err, res) => {
-  //           let errors = [];
-  //           if (res.body.error === undefined) {
-  //             errors.push('- Properti error tidak ada dalam respons');
-  //           } else if (res.body.error !== 0) {
-  //             errors.push(`- Properti error dalam respons bukan 0, tetapi "${res.body.error}"`);
-  //           }
-  //           if (res.body.message === undefined) {
-  //             errors.push('- Properti message tidak ada dalam respons');
-  //           } else if (res.body.message !== 'Logout successfully') {
-  //             errors.push(`- Properti message dalam respons bukan "Logout successfully", tetapi "${res.body.message}"`);
-  //           }
-  //           if (errors.length > 0) {
-  //             console.log(errors.join('\n'));
-  //           } else {
-  //             console.log('- test logout berhasil');
-  //           }
-  //           done();
-  //         });
-  //     });
-  //   });
-  // });
+  describe('API Endpoints', () => {
+    // Test /logout endpoint
+    describe('/POST logout', () => {
+      it('it should logout a user', (done) => {
+        chai
+          .request(server)
+          .post('/logout')
+          .set('Authorization', 'Bearer ' + token)
+          .end((err, res) => {
+            let errors = [];
+            if (res.body.error === undefined) {
+              errors.push('- Properti error tidak ada dalam respons');
+            } else if (res.body.error !== 0) {
+              errors.push(`- Properti error dalam respons bukan 0, tetapi "${res.body.error}"`);
+            }
+            if (res.body.message === undefined) {
+              errors.push('- Properti message tidak ada dalam respons');
+            } else if (res.body.message !== 'Logout successfully') {
+              errors.push(`- Properti message dalam respons bukan "Logout successfully", tetapi "${res.body.message}"`);
+            }
+            if (errors.length > 0) {
+              console.log(errors.join('\n'));
+            } else {
+              console.log('- test logout berhasil');
+            }
+            done();
+          });
+      });
+    });
+  });
 
   // // Test /report endpoint
   // describe('API Endpoints', () => {
