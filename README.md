@@ -82,7 +82,7 @@ Teknologi yang digunakan :
 
 ### Report
 > fitur masih sederhana, 
-
+#### Buat Laporan
 - URL : /report
 - Method : POST
 - Request Header:
@@ -102,7 +102,7 @@ Teknologi yang digunakan :
     "data": "655e0f1cd6070a1f3e8d90c3"
 }
 ```
-
+#### Mengambil Semua Laporan
 - URL : /report
 - Method : GET
 - Response:
@@ -139,7 +139,7 @@ Teknologi yang digunakan :
   ]
 }
 ```
-
+#### Detail Laporan
 - URL : /report/idreport
 - Method : GET
 Request Header:
@@ -181,6 +181,7 @@ Request Header:
 
 ### Comment
 
+#### Tambah Komentar
 - URL : /comment/:id
 - Method : POST
 - Request Header:
