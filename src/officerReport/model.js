@@ -7,4 +7,10 @@ const officerReportSchema = {
     minlength: 3,
   },
   image: [String],
+  officer: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
 };
+
+module.exports = model('OfficerReport', officerReportSchema);
