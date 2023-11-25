@@ -18,7 +18,7 @@ const reportSchema = Schema(
     address: {
       type: String,
       required: [true, 'alamat harus ada'],
-      minlength: 10,
+      minlength: 3,
     },
     latitude: {
       type: String,

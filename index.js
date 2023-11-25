@@ -1,3 +1,5 @@
+require('./connection');
+
 const express = require('express');
 const fs = require('fs');
 const morgan = require('morgan');
@@ -7,10 +9,12 @@ const app = express();
 const createError = require('http-errors');
 
 const port = 5500;
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 const authRouter = require('./src/auth/router');
 const commentRouter = require('./src/comment/router');
 const reportRouter = require('./src/reports/router');
+const uploadImage = require('./src/reports/uploadImage');
 
 const { decodeToken } = require('./src/auth/middleware');
 
@@ -23,14 +27,14 @@ const accessLogStream = fs.createWriteStream(
 //   next();
 // });
 // app.use(morgan('combined', { stream: accessLogStream }));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
 app.use(decodeToken());
 
 app.use(authRouter);
 app.use(commentRouter);
 app.use(reportRouter);
 app.use(routers);
+app.use(uploadImage);
 
 const server = app.listen(port, () => console.log(`server running at ${port}`));
 module.exports = server;
