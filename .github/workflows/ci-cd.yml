@@ -22,15 +22,6 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Print Environment Variables
-        run: |
-          echo DB_HOST=${{ secrets.DB_HOST }}
-          echo DB_NAME=${{ secrets.DB_NAME }}
-          echo SECRET_KEY=${{ secrets.SECRET_KEY }}
-          echo MA_USER=${{ secrets.MA_USER }}
-          echo MA_PASSWORD=${{ secrets.MA_PASSWORD }}
-          echo MA_SERVER=${{ secrets.MA_SERVER }}
-
       - name: Run Tests
         env: # Define your environment variables here
           DB_HOST: ${{ secrets.DB_HOST }}
