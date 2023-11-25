@@ -43,7 +43,6 @@ describe('API Endpoints', () => {
           } else {
             console.log('- test register berhasil');
           }
-          done();
         });
     });
   });
