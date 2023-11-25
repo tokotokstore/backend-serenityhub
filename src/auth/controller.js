@@ -9,14 +9,27 @@ async function register(req, res, next) {
   try {
     const payload = req.body;
     let user = new User(payload);
-    await user.save();
+
+    // Bungkus operasi save dalam Promise
+    const saveUser = new Promise((resolve, reject) => {
+      user.save((err, result) => {
+        if (err) reject(err);
+        else resolve(result);
+      });
+    });
+
+    // Atur timeout
+    const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('Operasi melebihi batas waktu')), 5000));
+
+    // Gunakan Promise.race() untuk menjalankan operasi save melawan timeout
+    user = await Promise.race([saveUser, timeout]);
+
     if (user) {
       return res.json({
         status: 'ok',
         message: 'register successfuly',
       });
     }
-    // return res.json(user);
   } catch (err) {
     if (err && err.name === 'ValidationError') {
       return res.json({
@@ -64,7 +77,7 @@ async function login(req, res, next) {
 
       //  hanya bisa login di satu perangkat, karena token hanya 1 saja
       { $set: { token: signed } },
-      { new: true },
+      { new: true }
     );
     return res.json({
       message: 'logged in successfully',
@@ -86,11 +99,7 @@ function me(req, res, next) {
 
 async function logout(req, res, next) {
   let token = getToken(req);
-  const user = await User.findOneAndUpdate(
-    { token: { $in: [token] } },
-    { $pull: { token } },
-    { useFindAndModify: false },
-  );
+  const user = await User.findOneAndUpdate({ token: { $in: [token] } }, { $pull: { token } }, { useFindAndModify: false });
   if (!user || !token) {
     return res.json({
       error: 1,
