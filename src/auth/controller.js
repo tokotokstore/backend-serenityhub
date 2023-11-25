@@ -33,7 +33,7 @@ async function localStrategy(email, password, done) {
   try {
     let user = await User.findOne({
       email,
-    }).select(' -__v  -createdAt -updatedAt -token -customer_id ');
+    }).select(' -__v  -createdAt -updatedAt -token ');
 
     if (!user) return done();
     if (bcrypt.compareSync(password, user.password)) {
