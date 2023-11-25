@@ -17,7 +17,7 @@ describe('API Endpoints', function () {
     it('it should register a user', (done) => {
       let user = {
         name: 'Test User',
-        email: 'testuser@gmail.com',
+
         password: 'password',
       };
       chai
