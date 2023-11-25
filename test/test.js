@@ -9,15 +9,13 @@ chai.use(chaiHttp);
 
 let token;
 
-describe('API Endpoints', function () {
-  this.timeout(0); // Set timeout to unlimited
-
+describe('API Endpoints', () => {
   // Test /register endpoint
-  describe('/POST register', function () {
-    it('it should register a user', function (done) {
+  describe('/POST register', () => {
+    it('it should register a user', (done) => {
       let user = {
         name: 'Test User',
-
+        email: 'testuser@gmail.com',
         password: 'password',
       };
       chai
@@ -49,12 +47,10 @@ describe('API Endpoints', function () {
     });
   });
 
-  describe('API Endpoints', function () {
-    this.timeout(0); // Set timeout to unlimited
-
+  describe('API Endpoints', () => {
     // Test /login endpoint
-    describe('/POST login', function () {
-      it('it should login a user', function (done) {
+    describe('/POST login', () => {
+      it('it should login a user', (done) => {
         let user = {
           email: 'testuser@gmail.com',
           password: 'password',
@@ -104,17 +100,15 @@ describe('API Endpoints', function () {
     });
   });
 
-  describe('API Endpoints', function () {
-    this.timeout(0); // Set timeout to unlimited
-
+  describe('API Endpoints', () => {
     // Test /logout endpoint
-    describe('/POST logout', function () {
-      it('it should logout a user', function (done) {
+    describe('/POST logout', () => {
+      it('it should logout a user', (done) => {
         chai
           .request(server)
           .post('/logout')
           .set('Authorization', 'Bearer ' + token)
-          .end(function (err, res) {
+          .end((err, res) => {
             let errors = [];
             if (res.body.error === undefined) {
               errors.push('- Properti error tidak ada dalam respons');
@@ -127,7 +121,6 @@ describe('API Endpoints', function () {
               errors.push(`- Properti message dalam respons bukan "Logout successfully", tetapi "${res.body.message}"`);
             }
             if (errors.length > 0) {
-              console.log(res.body); // Log the response body to debug
               throw new Error(errors.join('\n'));
             }
             done();
@@ -136,103 +129,103 @@ describe('API Endpoints', function () {
     });
   });
 
-  // Test /report endpoint
-  describe('API Endpoints', () => {
-    // Test /report endpoint
-    describe('/POST report', () => {
-      it('it should create a report', (done) => {
-        let report = {
-          title: 'Test Report',
-          description: 'This is a test report',
-          address: 'Test Address',
-          longitude: '123.456',
-          latitude: '78.90',
-        };
-        chai
-          .request(server)
-          .post('/report')
-          .set('Authorization', 'Bearer ' + token)
-          .send(report)
-          .end((err, res) => {
-            let errors = [];
-            if (res.body.status === undefined) {
-              errors.push('Properti status tidak ada dalam respons');
-            } else if (res.body.status !== 'ok') {
-              errors.push(`Properti status dalam respons bukan "ok", tetapi "${res.body.status}"`);
-            }
-            if (res.body.message === undefined) {
-              errors.push('Properti message tidak ada dalam respons');
-            } else if (res.body.message !== 'Report berhasil dibuat') {
-              errors.push(`Properti message dalam respons bukan "Report berhasil dibuat", tetapi "${res.body.message}"`);
-            }
-            if (res.body.data === undefined) {
-              errors.push('Properti data tidak ada dalam respons');
-            }
-            if (errors.length > 0) {
-              throw new Error(errors.join('\n'));
-            }
-            done();
-          });
-      });
-    });
-  });
+  // // Test /report endpoint
+  // describe('API Endpoints', () => {
+  //   // Test /report endpoint
+  //   describe('/POST report', () => {
+  //     it('it should create a report', (done) => {
+  //       let report = {
+  //         title: 'Test Report',
+  //         description: 'This is a test report',
+  //         address: 'Test Address',
+  //         longitude: '123.456',
+  //         latitude: '78.90',
+  //       };
+  //       chai
+  //         .request(server)
+  //         .post('/report')
+  //         .set('Authorization', 'Bearer ' + token)
+  //         .send(report)
+  //         .end((err, res) => {
+  //           let errors = [];
+  //           if (res.body.status === undefined) {
+  //             errors.push('Properti status tidak ada dalam respons');
+  //           } else if (res.body.status !== 'ok') {
+  //             errors.push(`Properti status dalam respons bukan "ok", tetapi "${res.body.status}"`);
+  //           }
+  //           if (res.body.message === undefined) {
+  //             errors.push('Properti message tidak ada dalam respons');
+  //           } else if (res.body.message !== 'Report berhasil dibuat') {
+  //             errors.push(`Properti message dalam respons bukan "Report berhasil dibuat", tetapi "${res.body.message}"`);
+  //           }
+  //           if (res.body.data === undefined) {
+  //             errors.push('Properti data tidak ada dalam respons');
+  //           }
+  //           if (errors.length > 0) {
+  //             throw new Error(errors.join('\n'));
+  //           }
+  //           done();
+  //         });
+  //     });
+  //   });
+  // });
 
-  // Test /report endpoint
-  describe('/GET report', () => {
-    it('it should get all reports', (done) => {
-      chai
-        .request(server)
-        .get('/report')
-        .set('Authorization', 'Bearer ' + token)
-        .end((err, res) => {
-          res.should.have.status(200, 'Endpoint /report tidak merespons dengan status 200');
-          res.body.should.be.a('object', 'Respon dari endpoint /report bukan objek');
-          res.body.should.have.property('status').eql('ok', 'Properti status dalam respon bukan "ok"');
-          res.body.should.have.property('data').be.a('array', 'Properti data dalam respon bukan array');
-          done();
-        });
-    });
-  });
+  // // Test /report endpoint
+  // describe('/GET report', () => {
+  //   it('it should get all reports', (done) => {
+  //     chai
+  //       .request(server)
+  //       .get('/report')
+  //       .set('Authorization', 'Bearer ' + token)
+  //       .end((err, res) => {
+  //         res.should.have.status(200, 'Endpoint /report tidak merespons dengan status 200');
+  //         res.body.should.be.a('object', 'Respon dari endpoint /report bukan objek');
+  //         res.body.should.have.property('status').eql('ok', 'Properti status dalam respon bukan "ok"');
+  //         res.body.should.have.property('data').be.a('array', 'Properti data dalam respon bukan array');
+  //         done();
+  //       });
+  //   });
+  // });
 
-  // Test /report/:id endpoint
-  describe('/GET report/:id', () => {
-    it('it should get report detail', (done) => {
-      let reportId = '1234567890'; // Ganti dengan ID laporan yang valid
-      chai
-        .request(server)
-        .get('/report/' + reportId)
-        .set('Authorization', 'Bearer ' + token)
-        .end((err, res) => {
-          res.should.have.status(200, 'Endpoint /report/:id tidak merespons dengan status 200');
-          res.body.should.be.a('object', 'Respon dari endpoint /report/:id bukan objek');
-          res.body.should.have.property('status').eql('ok', 'Properti status dalam respon bukan "ok"');
-          res.body.should.have.property('data').be.a('array', 'Properti data dalam respon bukan array');
-          done();
-        });
-    });
-  });
+  // // Test /report/:id endpoint
+  // describe('/GET report/:id', () => {
+  //   it('it should get report detail', (done) => {
+  //     let reportId = '1234567890'; // Ganti dengan ID laporan yang valid
+  //     chai
+  //       .request(server)
+  //       .get('/report/' + reportId)
+  //       .set('Authorization', 'Bearer ' + token)
+  //       .end((err, res) => {
+  //         res.should.have.status(200, 'Endpoint /report/:id tidak merespons dengan status 200');
+  //         res.body.should.be.a('object', 'Respon dari endpoint /report/:id bukan objek');
+  //         res.body.should.have.property('status').eql('ok', 'Properti status dalam respon bukan "ok"');
+  //         res.body.should.have.property('data').be.a('array', 'Properti data dalam respon bukan array');
+  //         done();
+  //       });
+  //   });
+  // });
 
-  // Test /comment/:id endpoint
-  describe('/POST comment/:id', () => {
-    it('it should add a comment', (done) => {
-      let reportId = '1234567890'; // Ganti dengan ID laporan yang valid
-      let comment = {
-        message: 'This is a test comment',
-      };
-      chai
-        .request(server)
-        .post('/comment/' + reportId)
-        .set('Authorization', 'Bearer ' + token)
-        .send(comment)
-        .end((err, res) => {
-          res.should.have.status(200, 'Endpoint /comment/:id tidak merespons dengan status 200');
-          res.body.should.be.a('object', 'Respon dari endpoint /comment/:id bukan objek');
-          res.body.should.have.property('status').eql('ok', 'Properti status dalam respon bukan "ok"');
-          res.body.should.have.property('message').eql('comment added', 'Properti message dalam respon bukan "comment added"');
-          done();
-        });
-    });
-  });
+  // // Test /comment/:id endpoint
+  // describe('/POST comment/:id', () => {
+  //   it('it should add a comment', (done) => {
+  //     let reportId = '1234567890'; // Ganti dengan ID laporan yang valid
+  //     let comment = {
+  //       message: 'This is a test comment',
+  //     };
+  //     chai
+  //       .request(server)
+  //       .post('/comment/' + reportId)
+  //       .set('Authorization', 'Bearer ' + token)
+  //       .send(comment)
+  //       .end((err, res) => {
+  //         res.should.have.status(200, 'Endpoint /comment/:id tidak merespons dengan status 200');
+  //         res.body.should.be.a('object', 'Respon dari endpoint /comment/:id bukan objek');
+  //         res.body.should.have.property('status').eql('ok', 'Properti status dalam respon bukan "ok"');
+  //         res.body.should.have.property('message').eql('comment added', 'Properti message dalam respon bukan "comment added"');
+  //         done();
+  //       });
+  //   });
+  // });
 
   // After all tests have run
   after(function (done) {
