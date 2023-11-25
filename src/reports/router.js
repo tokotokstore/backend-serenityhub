@@ -5,6 +5,6 @@ const reportController = require('./controller');
 
 router.get('/report/:id', reportController.getDetailReport);
 router.get('/report', reportController.getAllReport);
-router.post('/report', multer().none(), reportController.addReport);
+router.post('/report', reportController.addReport);
 
 module.exports = router;
