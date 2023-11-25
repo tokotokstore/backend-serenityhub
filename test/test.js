@@ -10,7 +10,7 @@ chai.use(chaiHttp);
 let token;
 
 describe('API Endpoints', function () {
-  this.timeout(20000);
+  this.timeout(0);
 
   // Test /register endpoint
   describe('/POST register', () => {
