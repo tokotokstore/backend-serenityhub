@@ -9,11 +9,12 @@ chai.use(chaiHttp);
 
 let token;
 
-describe('API Endpoints', () => {
-  this.timeout(0);
+describe('API Endpoints', function () {
+  this.timeout(0); // Set timeout to unlimited
+
   // Test /register endpoint
-  describe('/POST register', () => {
-    it('it should register a user', (done) => {
+  describe('/POST register', function () {
+    it('it should register a user', function (done) {
       let user = {
         name: 'Test User',
         email: 'testuser@gmail.com',
@@ -48,11 +49,12 @@ describe('API Endpoints', () => {
     });
   });
 
-  describe('API Endpoints', () => {
-    this.timeout(0);
+  describe('API Endpoints', function () {
+    this.timeout(0); // Set timeout to unlimited
+
     // Test /login endpoint
-    describe('/POST login', () => {
-      it('it should login a user', (done) => {
+    describe('/POST login', function () {
+      it('it should login a user', function (done) {
         let user = {
           email: 'testuser@gmail.com',
           password: 'password',
@@ -102,16 +104,17 @@ describe('API Endpoints', () => {
     });
   });
 
-  describe('API Endpoints', () => {
-    this.timeout(0);
+  describe('API Endpoints', function () {
+    this.timeout(0); // Set timeout to unlimited
+
     // Test /logout endpoint
-    describe('/POST logout', () => {
-      it('it should logout a user', (done) => {
+    describe('/POST logout', function () {
+      it('it should logout a user', function (done) {
         chai
           .request(server)
           .post('/logout')
           .set('Authorization', 'Bearer ' + token)
-          .end((err, res) => {
+          .end(function (err, res) {
             let errors = [];
             if (res.body.error === undefined) {
               errors.push('- Properti error tidak ada dalam respons');
@@ -124,6 +127,7 @@ describe('API Endpoints', () => {
               errors.push(`- Properti message dalam respons bukan "Logout successfully", tetapi "${res.body.message}"`);
             }
             if (errors.length > 0) {
+              console.log(res.body); // Log the response body to debug
               throw new Error(errors.join('\n'));
             }
             done();
