@@ -9,12 +9,10 @@ chai.use(chaiHttp);
 
 let token;
 
-describe('API Endpoints', function () {
-  this.timeout(0); // Set timeout to unlimited
-
+describe('API Endpoints', () => {
   // Test /register endpoint
-  describe('/POST register', function () {
-    it('it should register a user', function (done) {
+  describe('/POST register', () => {
+    it('it should register a user', (done) => {
       let user = {
         name: 'Test User',
         email: 'testuser@gmail.com',
