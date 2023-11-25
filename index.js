@@ -32,5 +32,5 @@ app.use(commentRouter);
 app.use(reportRouter);
 app.use(routers);
 
-app.listen(port, () => console.log(`server running at ${port}`));
-module.exports = app;
+const server = app.listen(port, () => console.log(`server running at ${port}`));
+module.exports = server;

@@ -64,7 +64,7 @@ async function login(req, res, next) {
 
       //  hanya bisa login di satu perangkat, karena token hanya 1 saja
       { $set: { token: signed } },
-      { new: true },
+      { new: true }
     );
     return res.json({
       message: 'logged in successfully',
@@ -86,11 +86,7 @@ function me(req, res, next) {
 
 async function logout(req, res, next) {
   let token = getToken(req);
-  const user = await User.findOneAndUpdate(
-    { token: { $in: [token] } },
-    { $pull: { token } },
-    { useFindAndModify: false },
-  );
+  const user = await User.findOneAndUpdate({ token: { $in: [token] } }, { $pull: { token } }, { useFindAndModify: false });
   if (!user || !token) {
     return res.json({
       error: 1,

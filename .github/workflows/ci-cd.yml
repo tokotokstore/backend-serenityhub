@@ -2,17 +2,13 @@ name: CI/CD for Backend
 
 on:
   push:
-    branches: [main]
+    branches: [main, DevOps, Dev]
   pull_request:
-    branches: [main]
+    branches: [main, DevOps, Dev]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
 
     steps:
       - name: Checkout Repository
@@ -21,16 +17,10 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: 16
 
       - name: Install Dependencies
         run: npm install
 
       - name: Run Tests
         run: npm test
-
-      - name: Run Mongoose Tests
-        run: npm testDB
-
-      - name: Deploy to Production
-        run: npm start

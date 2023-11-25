@@ -30,7 +30,7 @@ const userSchema = Schema(
     },
     token: [String],
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 userSchema.path('email').validate(
@@ -38,11 +38,11 @@ userSchema.path('email').validate(
     const EMAIL_RE = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     return EMAIL_RE.test(value);
   },
-  (attr) => `${attr.value} harus merupakan email yang valid`,
+  (attr) => `${attr.value} harus merupakan email yang valid`
 );
 
 userSchema.path('email').validate(
-  async function(value) {
+  async function (value) {
     try {
       const count = await this.model('User').countDocuments({ email: value });
       return !count;
@@ -50,10 +50,10 @@ userSchema.path('email').validate(
       throw err;
     }
   },
-  (attr) => `${attr.value} sudah terdaftar`,
+  (attr) => `${attr.value} sudah terdaftar`
 );
 
-userSchema.pre('save', function(next) {
+userSchema.pre('save', function (next) {
   this.password = bcrypt.hashSync(this.password, HASH_ROUND);
   next();
 });
