@@ -8,7 +8,7 @@ const app = express();
 
 routers.get('/', (req, res) => res.send('halaman utama'));
 routers.get('/public/download/:name', (req, res) => {
-  const filename = '../public/lampu_jalan_mati.jpeg';
+  const filename = `../public/${req.params.name}`;
   res.download(path.join(__dirname, filename));
 });
 
