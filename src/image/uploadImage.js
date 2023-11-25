@@ -13,7 +13,7 @@ const imageFilter = (req, file, cb) => {
 
 const upload = multer({ dest: 'public', fileFilter: imageFilter });
 
-router.post('/uploadimage', upload.single('image'), (req, res) => {
+router.post('/upload/image', upload.single('image'), (req, res) => {
   if (!req.user) {
     return res.json({
       error: 1,
@@ -24,7 +24,7 @@ router.post('/uploadimage', upload.single('image'), (req, res) => {
   if (file) {
     const type = req.file.mimetype;
     const fileType = type.substring(type.indexOf('/') + 1);
-    console.log(file);
+    // console.log(file);
     fs.renameSync(file.path, `${file.path}.${fileType}`);
     res.status(200).json({
       status: 'ok',
@@ -39,7 +39,7 @@ router.post('/uploadimage', upload.single('image'), (req, res) => {
   }
 });
 
-router.post('/multiupload', upload.array('image', 3), (req, res) => {
+router.post('/upload/image/multi', upload.array('image', 3), (req, res) => {
   const image = req.files;
   const imageName = [];
   if (image) {
@@ -69,7 +69,7 @@ router.post('/multiupload', upload.array('image', 3), (req, res) => {
 
 // delete image
 
-router.delete('/deleteimage/:name', (req, res) => {
+router.delete('/delete/image/:name', (req, res) => {
   if (!req.user) {
     return res.json({
       error: 1,
@@ -88,7 +88,10 @@ router.delete('/deleteimage/:name', (req, res) => {
       message: `image deleted successfully`,
     });
   } else {
-    res.status(404).send(`image not found`);
+    res.status(404).json({
+      error: 1,
+      message: `image not found`,
+    });
   }
 });
 
