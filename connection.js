@@ -10,8 +10,6 @@ const localConnection = `mongodb://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/$
 mongoose.connect(mongodbAtlas, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  serverSelectionTimeoutMS: 60000,
-  socketTimeoutMS: 60000,
 });
 
 const db = mongoose.connection;

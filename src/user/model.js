@@ -44,14 +44,8 @@ userSchema.path('email').validate(
 userSchema.path('email').validate(
   async function (value) {
     try {
-      // Promise.race akan menyelesaikan promise pertama yang selesai
-      const result = await Promise.race([this.model('User').countDocuments({ email: value }), new Promise((resolve) => setTimeout(() => resolve('timeout'), 50000))]);
-
-      if (result === 'timeout') {
-        throw new Error('Operation timed out');
-      }
-
-      return !result;
+      const count = await this.model('User').countDocuments({ email: value });
+      return !count;
     } catch (err) {
       throw err;
     }

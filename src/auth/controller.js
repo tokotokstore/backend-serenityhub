@@ -9,25 +9,14 @@ async function register(req, res, next) {
   try {
     const payload = req.body;
     let user = new User(payload);
-
-    // Bungkus operasi save dalam Promise
-    const saveUser = new Promise((resolve, reject) => {
-      user.save((err, result) => {
-        if (err) reject(err);
-        else resolve(result);
-      });
-    });
-
-    // Atur timeout
-    const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('Operasi melebihi batas waktu')), 60000));
-    user = await Promise.race([saveUser, timeout]);
-
+    await user.save();
     if (user) {
       return res.json({
         status: 'ok',
         message: 'register successfuly',
       });
     }
+    // return res.json(user);
   } catch (err) {
     if (err && err.name === 'ValidationError') {
       return res.json({
