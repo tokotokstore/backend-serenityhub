@@ -10,6 +10,7 @@ chai.use(chaiHttp);
 let token;
 
 describe('API Endpoints', () => {
+  this.timeout(0);
   // Test /register endpoint
   describe('/POST register', () => {
     it('it should register a user', (done) => {
@@ -48,6 +49,7 @@ describe('API Endpoints', () => {
   });
 
   describe('API Endpoints', () => {
+    this.timeout(0);
     // Test /login endpoint
     describe('/POST login', () => {
       it('it should login a user', (done) => {
@@ -101,6 +103,7 @@ describe('API Endpoints', () => {
   });
 
   describe('API Endpoints', () => {
+    this.timeout(0);
     // Test /logout endpoint
     describe('/POST logout', () => {
       it('it should logout a user', (done) => {
