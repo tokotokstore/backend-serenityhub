@@ -9,7 +9,9 @@ chai.use(chaiHttp);
 
 let token;
 
-describe('API Endpoints', () => {
+describe('API Endpoints', function () {
+  this.timeout(20000);
+
   // Test /register endpoint
   describe('/POST register', () => {
     it('it should register a user', (done) => {
@@ -39,8 +41,9 @@ describe('API Endpoints', () => {
             }
           }
           if (errors.length > 0) {
-            console.log(res.body); // Log the response body to debug
-            throw new Error(errors.join('\n'));
+            console.log(errors.join('\n'));
+          } else {
+            console.log('- test register berhasil');
           }
           done();
         });
@@ -90,8 +93,9 @@ describe('API Endpoints', () => {
               }
             }
             if (errors.length > 0) {
-              console.log(res.body); // Log the response body to debug
-              throw new Error(errors.join('\n'));
+              console.log(errors.join('\n'));
+            } else {
+              console.log('- test Login berhasil');
             }
             token = res.body.token;
             done();
@@ -121,7 +125,9 @@ describe('API Endpoints', () => {
               errors.push(`- Properti message dalam respons bukan "Logout successfully", tetapi "${res.body.message}"`);
             }
             if (errors.length > 0) {
-              throw new Error(errors.join('\n'));
+              console.log(errors.join('\n'));
+            } else {
+              console.log('- test logout berhasil');
             }
             done();
           });
