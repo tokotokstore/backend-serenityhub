@@ -32,10 +32,13 @@ const reportSchema = Schema(
       default: 'accepted',
     },
     imageReport: [String],
-    user: {
+    reporter: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    officerReport: {
       type: Schema.Types.ObjectId,
     },
-    imageFinished: [String],
     officer: {
       type: Schema.Types.ObjectId,
       ref: 'User',
@@ -50,10 +53,14 @@ const reportSchema = Schema(
   { timeStamps: true },
 );
 
-reportSchema.path('imageReport').validate((value) => {
-  if (!value.length) {
-    throw 'gambar harus ada'
-  }
-},(attr)=> `image harus ada`);
+reportSchema.path('imageReport').validate(
+  (value) => {
+    console.log(value.length);
+    if (!value.length) {
+      throw 'imageReport is required';
+    }
+  },
+  (attr) => `${attr.value} is required`,
+);
 
 module.exports = model('Report', reportSchema);
