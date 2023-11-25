@@ -42,6 +42,7 @@ describe('API Endpoints', function () {
           }
           if (errors.length > 0) {
             console.log(errors.join('\n'));
+            throw new Error(errors.join('\n'));
           } else {
             console.log('- test register berhasil');
           }
@@ -94,6 +95,7 @@ describe('API Endpoints', function () {
             }
             if (errors.length > 0) {
               console.log(errors.join('\n'));
+              throw new Error(errors.join('\n'));
             } else {
               console.log('- test Login berhasil');
             }
@@ -126,6 +128,7 @@ describe('API Endpoints', function () {
             }
             if (errors.length > 0) {
               console.log(errors.join('\n'));
+              throw new Error(errors.join('\n'));
             } else {
               console.log('- test logout berhasil');
             }
