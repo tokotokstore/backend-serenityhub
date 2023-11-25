@@ -7,14 +7,16 @@ const path = require('path');
 const routers = require('./src/routes');
 const app = express();
 const createError = require('http-errors');
-
-const port = 5500;
+const cors = require('cors');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const port = 5500;
+app.use(cors());
+
 const authRouter = require('./src/auth/router');
 const commentRouter = require('./src/comment/router');
 const reportRouter = require('./src/reports/router');
-const uploadImage = require('./src/reports/uploadImage');
+const uploadImage = require('./src/image/uploadImage');
 
 const { decodeToken } = require('./src/auth/middleware');
 

@@ -21,11 +21,12 @@ router.post('/uploadimage', upload.single('image'), (req, res) => {
     });
   }
   const file = req.file;
-  // console.log(file);
-  const type = req.file.mimetype;
-  const fileType = type.substring(type.indexOf('/') + 1);
+  console.log(file);
+
   // console.log(file);
   if (file) {
+    const type = req.file.mimetype;
+    const fileType = type.substring(type.indexOf('/') + 1);
     console.log(file);
     // const target = path.join(__dirname, '../../public', file.path);
     // console.log(target);
@@ -37,11 +38,14 @@ router.post('/uploadimage', upload.single('image'), (req, res) => {
       image: `${file.filename}.${fileType}`,
     });
   } else {
-    res.send('gagal upload');
+    res.json({
+      error: 1,
+      message: 'upload failed! image not found',
+    });
   }
 });
 
-router.post('/multi', upload.array('image', 3), (req, res) => {
+router.post('/multiupload', upload.array('image', 3), (req, res) => {
   const image = req.files;
   const imageName = [];
   if (image) {
@@ -68,5 +72,7 @@ router.post('/multi', upload.array('image', 3), (req, res) => {
     res.send('gagal upload');
   }
 });
+
+
 
 module.exports = router;
