@@ -38,6 +38,7 @@ const reportSchema = Schema(
     },
     officerReport: {
       type: Schema.Types.ObjectId,
+      ref: 'OfficerReport',
     },
     officer: {
       type: Schema.Types.ObjectId,
