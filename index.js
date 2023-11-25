@@ -16,7 +16,7 @@ app.use(cors());
 const authRouter = require('./src/auth/router');
 const commentRouter = require('./src/comment/router');
 const reportRouter = require('./src/reports/router');
-const uploadImage = require('./src/reports/uploadImage');
+const uploadImage = require('./src/image/uploadImage');
 
 const { decodeToken } = require('./src/auth/middleware');
 
