@@ -22,22 +22,12 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Run Test
-        env:
-          DB_HOST: localhost
-          DB_PORT: 27017
-          DB_USER: diki
-          DB_PASSWORD: 1234
-          DB_NAME: serenity
-          SECRET_KEY: capstoneSerenityLink
-          MA_USER: serenity
-          MA_PASSWORD: db123serenitylink
-          MA_SERVER: ac-ic7ust3-shard-00-00.rb7mi9g.mongodb.net:27017
-          FB_API_KEY: AIzaSyDdUa5MDhlDMNKIAOFNuYSe-vqNcngGxXU
-          FB_AUTH_DOMAIN: fir-seren/itylink.firebaseapp.com
-          FB_PROJECT_ID: fir-serenitylink
-          FB_STORAGE_BUCKET: fir-serenitylink.appspot.com
-          FB_MSG_SND_ID: 601754431083
-          FB_APPID: 1:601754431083:web:9f694638748b79de514b2e
-          FB_MEASSUREID: G-J5Q5SLQ0BC
+      - name: Run Tests
+        env: # Define your environment variables here
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          MA_PASSWORD: ${{ secrets.MA_PASSWORD }}
+          MA_SERVER: ${{ secrets.MA_SERVER }}
+          MA_USER: ${{ secrets.MA_USER }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: npm test
