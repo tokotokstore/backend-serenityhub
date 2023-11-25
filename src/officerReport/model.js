@@ -1,7 +1,7 @@
 const mongose = require('mongoose');
 const { model, Schema } = mongose;
 
-const officerReportSchema = {
+const officerReportSchema = Schema({
   message: {
     type: String,
     minlength: 3,
@@ -11,7 +11,7 @@ const officerReportSchema = {
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
-};
+});
 
 officerReportSchema.path('imageReport').validate(
   (value) => {
