@@ -19,9 +19,7 @@ async function register(req, res, next) {
     });
 
     // Atur timeout
-    const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('Operasi melebihi batas waktu')), 5000));
-
-    // Gunakan Promise.race() untuk menjalankan operasi save melawan timeout
+    const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('Operasi melebihi batas waktu')), 60000));
     user = await Promise.race([saveUser, timeout]);
 
     if (user) {
