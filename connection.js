@@ -3,7 +3,7 @@ const config = require('./src/config');
 const { dbHost, dbName, dbPassword, dbPort, dbUser, maUser, maPassword, maServer } = config;
 
 mongoose.set('strictQuery', false);
-const mongodbAtlas = `mongodb://${process.env.MA_USER}:${process.env.MA_PASSWORD}@${process.env.MA_SERVER}/${process.env.DB_NAME}?replicaSet=atlas-munim4-shard-0&ssl=true&authSource=admin`;
+const mongodbAtlas = `mongodb://${maUser}:${maPassword}@${maServer}/${dbName}?replicaSet=atlas-munim4-shard-0&ssl=true&authSource=admin`;
 
 const localConnection = `mongodb://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}?authSource=admin`;
 
