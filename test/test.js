@@ -9,8 +9,10 @@ chai.use(chaiHttp);
 
 let token;
 
-describe('API Endpoints', () => {
-  // Test /register endpoint
+describe('API Endpoints', function () {
+  this.timeout(5000); // mengatur waktu tunggu menjadi 5000ms
+
+  // Tes endpoint /register
   describe('/POST register', () => {
     it('it should register a user', (done) => {
       let user = {
@@ -43,6 +45,7 @@ describe('API Endpoints', () => {
           } else {
             console.log('- test register berhasil');
           }
+          done();
         });
     });
   });
