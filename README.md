@@ -248,9 +248,6 @@ Teknologi yang digunakan :
 - Method : DELETE
 - Request Header:
   - Authorization : 'Bearer {token}'
-- Request file:
-  - image as object
-  - In postman menu: body->form-data and key : image type file
 - Response:
 
 ```json
