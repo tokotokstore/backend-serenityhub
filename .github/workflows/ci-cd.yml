@@ -25,9 +25,12 @@ jobs:
       - name: Run Tests
         env: # Define your environment variables here
           DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_NAME: ${{ secrets.DB_NAME }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          MA_USER: ${{ secrets.MA_USER }}
           MA_PASSWORD: ${{ secrets.MA_PASSWORD }}
           MA_SERVER: ${{ secrets.MA_SERVER }}
-          MA_USER: ${{ secrets.MA_USER }}
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: npm test
