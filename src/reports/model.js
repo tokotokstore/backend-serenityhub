@@ -29,11 +29,11 @@ const reportSchema = Schema(
     status: {
       type: String,
       enum: ['accepted', 'process', 'done', 'rejecected'],
-      default: "accepted",
+      default: 'accepted',
     },
     imageReport: [String],
-    user:{
-      type: Schema.Types.ObjectId
+    user: {
+      type: Schema.Types.ObjectId,
     },
     imageFinished: [String],
     officer: {
@@ -49,5 +49,11 @@ const reportSchema = Schema(
   },
   { timeStamps: true },
 );
+
+reportSchema.path('imageReport').validate((value) => {
+  if (!value.length) {
+    throw 'gambar harus ada'
+  }
+},(attr)=> `image harus ada`);
 
 module.exports = model('Report', reportSchema);

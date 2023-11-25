@@ -8,11 +8,11 @@ const routers = require('./src/routes');
 const app = express();
 const createError = require('http-errors');
 const cors = require('cors');
-
-const port = 5500;
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const port = 5500;
+app.use(cors());
+
 const authRouter = require('./src/auth/router');
 const commentRouter = require('./src/comment/router');
 const reportRouter = require('./src/reports/router');

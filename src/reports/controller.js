@@ -12,28 +12,30 @@ async function addReport(req, res, next) {
   try {
     const payload = req.body;
     console.log(payload);
-    const image = req.files;
+    // const image = req.files;
+    // console.log(image);
     const user = req.user;
-    const imageString = [];
-    if (image) {
-      for (let i = 0; i < image.length; i++) {
-        const target = path.join(
-          __dirname,
-          '../../public',
-          image[i].originalname,
-        );
-        const fileType = image[i].mimetype.substring(
-          image[i].mimetype.indexOf('/') + 1,
-        );
+    // const imageString = [];
+    // if (image) {
+    //   for (let i = 0; i < image.length; i++) {
+    //     const target = path.join(
+    //       __dirname,
+    //       '../../public',
+    //       image[i].originalname,
+    //     );
+    //     const fileType = image[i].mimetype.substring(
+    //       image[i].mimetype.indexOf('/') + 1,
+    //     );
 
-        fs.renameSync(image[i].path, `${image[i].path}.${fileType}`);
-        imageString.push(`${image[i].filename}.${fileType}`);
-      }
-      // console.log(imageString);
-    }
+    //     fs.renameSync(image[i].path, `${image[i].path}.${fileType}`);
+    //     imageString.push(`${image[i].filename}.${fileType}`);
+    //   }
+    //   console.log(imageString);
+    // }
     const newReport = new ReportUser({
       ...payload,
       user: user._id,
+      // imageReport: [...imageReport, imageString],
     });
 
     await newReport.save();
