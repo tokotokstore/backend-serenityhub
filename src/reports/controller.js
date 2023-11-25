@@ -34,7 +34,6 @@ async function addReport(req, res, next) {
     const newReport = new ReportUser({
       ...payload,
       user: user._id,
-      // imageReport: imageString,
     });
 
     await newReport.save();

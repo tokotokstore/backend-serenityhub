@@ -1,4 +1,5 @@
 node_modules
 .vscode
+.env
 public
-fir-serenitylink-firebase-adminsdk-bszm1-7fb5ec566b.json
+

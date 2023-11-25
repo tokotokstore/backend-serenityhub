@@ -21,12 +21,18 @@ router.post('/uploadimage', upload.single('image'), (req, res) => {
     });
   }
   const file = req.file;
+  console.log(file);
+
+  // console.log(file);
   if (file) {
     const type = req.file.mimetype;
     const fileType = type.substring(type.indexOf('/') + 1);
     console.log(file);
+    // const target = path.join(__dirname, '../../public', file.path);
+    // console.log(target);
+
     fs.renameSync(file.path, `${file.path}.${fileType}`);
-    res.status(200).json({
+    res.send({
       status: 'ok',
       message: 'upload image success',
       image: `${file.filename}.${fileType}`,
@@ -34,7 +40,7 @@ router.post('/uploadimage', upload.single('image'), (req, res) => {
   } else {
     res.json({
       error: 1,
-      message: 'upload failed, image not found',
+      message: 'upload failed! image not found',
     });
   }
 });
@@ -67,29 +73,6 @@ router.post('/multiupload', upload.array('image', 3), (req, res) => {
   }
 });
 
-// delete image
 
-router.delete('/deleteimage/:name', (req, res) => {
-  if (!req.user) {
-    return res.json({
-      error: 1,
-      message: `You're not not login or token expired`,
-    });
-  }
-  const imageName = req.params.name;
-  const filePath = path.join(__dirname, '../../public', imageName);
-
-  // Mengecek apakah file ada
-  if (fs.existsSync(filePath)) {
-    // Menghapus file
-    fs.unlinkSync(filePath);
-    res.json({
-      status: 'ok',
-      message: `image deleted successfully`,
-    });
-  } else {
-    res.status(404).send(`image not found`);
-  }
-});
 
 module.exports = router;
