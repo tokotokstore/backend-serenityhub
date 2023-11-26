@@ -60,7 +60,7 @@ async function addReport(req, res, next) {
 }
 
 async function getDetailReport(req, res, next) {
-  console.log(req.params.id);
+  // console.log(req.params.id);
   if (!req.user) {
     return res.json({
       error: 1,

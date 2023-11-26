@@ -32,9 +32,17 @@ const reportSchema = Schema(
       default: 'accepted',
     },
     imageReport: [String],
+    category: {
+      type: String,
+      required: [true, 'kategori harus ada'],
+    },
     reporter: {
       type: Schema.Types.ObjectId,
       ref: 'User',
+    },
+    unitWorks :{
+      type: Schema.Types.ObjectId,
+      ref: "UnitWork"
     },
     officerReport: {
       type: Schema.Types.ObjectId,
