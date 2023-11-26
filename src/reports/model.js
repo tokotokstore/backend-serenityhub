@@ -59,7 +59,7 @@ const reportSchema = Schema(
       },
     ],
   },
-  { timeStamps: true },
+  { timestamps: true },
 );
 
 reportSchema.path('imageReport').validate(

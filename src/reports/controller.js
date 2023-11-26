@@ -101,7 +101,9 @@ async function getAllReport(req, res, next) {
         path: 'comment',
         select: ['message', 'name'],
       })
-      .select('_id title status description imageReport -comment ');
+      .select(
+        '_id title status description imageReport createdAt updatedAt -comment ',
+      );
     if (report) {
       res.json({
         status: 'ok',
