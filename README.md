@@ -159,27 +159,25 @@ Teknologi yang digunakan :
 
 ```json
 {
-    "status": "ok",
-    "data": {
-        "_id": "65635bc140dbaa8363504d01",
-        "title": "Pohon rubuh",
-        "description": "ada pohon rubuh dipinggir jalan",
-        "address": "jl. kemerdekaan 12",
-        "latitude": "2131232131",
-        "longitude": "12312312321",
-        "status": "accepted",
-        "imageReport": [
-            "foto1.png", "adasda.jpeg"
-        ],
-        "category": "Pohon",
-        "reporter": {
-            "_id": "6561f6e523a7d6759c1fc30a",
-            "name": "john"
-        },
-        "comment": [],
-        "createdAt": "2023-11-26T14:52:49.011Z",
-        "updatedAt": "2023-11-26T14:52:49.011Z"
-    }
+  "status": "ok",
+  "data": {
+    "_id": "65635bc140dbaa8363504d01",
+    "title": "Pohon rubuh",
+    "description": "ada pohon rubuh dipinggir jalan",
+    "address": "jl. kemerdekaan 12",
+    "latitude": "2131232131",
+    "longitude": "12312312321",
+    "status": "accepted",
+    "imageReport": ["foto1.png", "adasda.jpeg"],
+    "category": "Pohon",
+    "reporter": {
+      "_id": "6561f6e523a7d6759c1fc30a",
+      "name": "john"
+    },
+    "comment": [],
+    "createdAt": "2023-11-26T14:52:49.011Z",
+    "updatedAt": "2023-11-26T14:52:49.011Z"
+  }
 }
 ```
 
@@ -285,3 +283,65 @@ Teknologi yang digunakan :
 - URL : /public/download/:name
 - Method : GET
 - Respone : Download start
+
+### Category
+
+#### Get Category
+
+- URL : /category
+- Method : GET
+- Response:
+
+```json
+{
+  "status": "ok",
+  "data": [
+    {
+      "name": "pendidikan",
+      "image": "\"pendidikan.png\"",
+      "createdAt": "2023-11-26T15:11:18.199Z",
+      "updatedAt": "2023-11-26T15:11:18.199Z",
+      "category_id": 1
+    },
+    {
+      "name": "pendidikan",
+      "image": "\"pendidikan.png\"",
+      "createdAt": "2023-11-26T15:12:09.686Z",
+      "updatedAt": "2023-11-26T15:12:09.686Z",
+      "category_id": 2
+    }
+  ]
+}
+```
+
+#### Add Category
+
+- URL : /officer/category
+- Method : POST
+- Request Header:
+  - Authorization : 'Bearer {token}'
+- Authorization : Use account with role : officer, admin, or superadmin
+- Response:
+
+```json
+{
+  "status": "ok",
+  "message": "add category sucessuflly",
+  "categoryId": "656366ec276d0b5b2f898648"
+}
+```
+
+#### Delete Category
+
+- URL : /officer/category/:id
+- Method : DELETE
+- Request Header:
+  - Authorization : 'Bearer {token}'
+- Authorization : Use account with role : officer, admin, or superadmin
+- Response:
+```json
+{
+    "status": "ok",
+    "message": "delete category successfully"
+}
+```
