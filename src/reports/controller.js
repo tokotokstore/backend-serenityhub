@@ -79,7 +79,7 @@ async function getDetailReport(req, res, next) {
       })
       .select('-__v');
     if (report) {
-      res.send({
+      res.json({
         status: 'ok',
         data: report,
       });
@@ -102,7 +102,7 @@ async function getAllReport(req, res, next) {
         select: ['message', 'name'],
       })
       .select(
-        '_id title status description imageReport createdAt updatedAt -comment ',
+        '_id title status description imageReport createdAt address -comment ',
       );
     if (report) {
       res.json({
