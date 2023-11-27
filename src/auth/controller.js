@@ -94,6 +94,7 @@ async function login(req, res, next) {
       { new: true },
     );
     return res.json({
+      status:'ok',
       message: 'logged in successfully',
       user: user,
       token: signed,
