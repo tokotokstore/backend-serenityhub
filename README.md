@@ -274,7 +274,7 @@ Teknologi yang digunakan :
 
 ### Get Image
 
-- URL : /public/:name
+- URL : /public/image/:name
 - Method : GET
 - Respone : Showing images
 
