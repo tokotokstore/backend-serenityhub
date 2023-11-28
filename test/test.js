@@ -4,13 +4,15 @@ const server = require('../index');
 const should = chai.should();
 const User = require('../src/user/model');
 const db = require('../connection');
+const Report = require('../src/reports/model');
 
 chai.use(chaiHttp);
 
 let token;
+let data = '';
 
 describe('API Endpoints', function () {
-  this.timeout(50000); // mengatur waktu tunggu menjadi 5000ms
+  this.timeout(50000);
 
   // Tes endpoint /register
   describe('/POST register', () => {
@@ -106,78 +108,52 @@ describe('API Endpoints', function () {
     });
   });
 
-  describe('API Endpoints', () => {
-    // Test /logout endpoint
-    describe('/POST logout', () => {
-      it('it should logout a user', (done) => {
-        chai
-          .request(server)
-          .post('/logout')
-          .set('Authorization', 'Bearer ' + token)
-          .end((err, res) => {
-            let errors = [];
-            if (res.body.error === undefined) {
-              errors.push('- Properti error tidak ada dalam respons');
-            } else if (res.body.error !== 0) {
-              errors.push(`- Properti error dalam respons bukan 0, tetapi "${res.body.error}"`);
+  // Test /report endpoint
+  describe('/POST report', () => {
+    it('it should create a report', (done) => {
+      let report = {
+        title: 'Test Report',
+        description: 'This is a test report',
+        address: 'Test Address',
+        longitude: '123.456',
+        latitude: '78.90',
+        imageReport: ['image1.png', 'image2.png'],
+      };
+      chai
+        .request(server)
+        .post('/report')
+        .set('Authorization', 'Bearer ' + token)
+        .send(report)
+        .end((err, res) => {
+          let errors = [];
+          if (res.body.error) {
+            errors.push(`Terjadi kesalahan: ${res.body.message}`);
+          } else {
+            if (res.body.status === undefined) {
+              errors.push('Properti status tidak ada dalam respons');
+            } else if (res.body.status !== 'ok') {
+              errors.push(`Properti status dalam respons bukan "ok", tetapi "${res.body.status}"`);
             }
             if (res.body.message === undefined) {
-              errors.push('- Properti message tidak ada dalam respons');
-            } else if (res.body.message !== 'Logout successfully') {
-              errors.push(`- Properti message dalam respons bukan "Logout successfully", tetapi "${res.body.message}"`);
+              errors.push('Properti message tidak ada dalam respons');
+            } else if (res.body.message !== 'Laporan berhasil dibuat') {
+              errors.push(`Properti message dalam respons bukan "Laporan berhasil dibuat", tetapi "${res.body.message}"`);
             }
-            if (errors.length > 0) {
-              console.log(errors.join('\n'));
-              throw new Error(errors.join('\n'));
-            } else {
-              console.log('- test logout berhasil');
+            if (res.body.data === undefined) {
+              errors.push('Properti idReport/Data tidak ada dalam respons');
             }
-            done();
-          });
-      });
+          }
+          if (errors.length > 0) {
+            console.log(errors.join('\n'));
+            throw new Error(errors.join('\n'));
+          } else {
+            console.log('- test Create Report berhasil');
+          }
+          data = res.body.data;
+          done();
+        });
     });
   });
-
-  // // Test /report endpoint
-  // describe('API Endpoints', () => {
-  //   // Test /report endpoint
-  //   describe('/POST report', () => {
-  //     it('it should create a report', (done) => {
-  //       let report = {
-  //         title: 'Test Report',
-  //         description: 'This is a test report',
-  //         address: 'Test Address',
-  //         longitude: '123.456',
-  //         latitude: '78.90',
-  //       };
-  //       chai
-  //         .request(server)
-  //         .post('/report')
-  //         .set('Authorization', 'Bearer ' + token)
-  //         .send(report)
-  //         .end((err, res) => {
-  //           let errors = [];
-  //           if (res.body.status === undefined) {
-  //             errors.push('Properti status tidak ada dalam respons');
-  //           } else if (res.body.status !== 'ok') {
-  //             errors.push(`Properti status dalam respons bukan "ok", tetapi "${res.body.status}"`);
-  //           }
-  //           if (res.body.message === undefined) {
-  //             errors.push('Properti message tidak ada dalam respons');
-  //           } else if (res.body.message !== 'Report berhasil dibuat') {
-  //             errors.push(`Properti message dalam respons bukan "Report berhasil dibuat", tetapi "${res.body.message}"`);
-  //           }
-  //           if (res.body.data === undefined) {
-  //             errors.push('Properti data tidak ada dalam respons');
-  //           }
-  //           if (errors.length > 0) {
-  //             throw new Error(errors.join('\n'));
-  //           }
-  //           done();
-  //         });
-  //     });
-  //   });
-  // });
 
   // // Test /report endpoint
   // describe('/GET report', () => {
@@ -236,9 +212,63 @@ describe('API Endpoints', function () {
   //   });
   // });
 
+  describe('API Endpoints', () => {
+    // Test /logout endpoint
+    describe('/POST logout', () => {
+      it('it should logout a user', (done) => {
+        chai
+          .request(server)
+          .post('/logout')
+          .set('Authorization', 'Bearer ' + token)
+          .end((err, res) => {
+            let errors = [];
+            if (res.body.error === undefined) {
+              errors.push('- Properti error tidak ada dalam respons');
+            } else if (res.body.error !== 0) {
+              errors.push(`- Properti error dalam respons bukan 0, tetapi "${res.body.error}"`);
+            }
+            if (res.body.message === undefined) {
+              errors.push('- Properti message tidak ada dalam respons');
+            } else if (res.body.message !== 'Logout successfully') {
+              errors.push(`- Properti message dalam respons bukan "Logout successfully", tetapi "${res.body.message}"`);
+            }
+            if (errors.length > 0) {
+              console.log(errors.join('\n'));
+              throw new Error(errors.join('\n'));
+            } else {
+              console.log('- test logout berhasil');
+            }
+            done();
+          });
+      });
+    });
+  });
+
+  // Fungsi untuk menghapus report
+  function deleteReport(done) {
+    chai
+      .request(server)
+      .delete('/report/' + data)
+      .set('Authorization', 'Bearer ' + token)
+      .end((err, res) => {
+        if (err) {
+          console.log(`Terjadi kesalahan saat menghapus laporan: ${err.message}`);
+        }
+        done();
+      });
+  }
+
+  afterEach(deleteReport);
+
   // After all tests have run
   after(function (done) {
+    // Delete the test user
     User.deleteOne({ email: 'testuser@gmail.com' }, function (err) {
+      if (err) {
+        console.log(err);
+      }
+    });
+    Report.deleteOne({ title: 'Test Report' }, function (err) {
       if (err) {
         console.log(err);
       }
