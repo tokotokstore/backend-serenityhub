@@ -22,6 +22,7 @@ async function addComment(req, res, next) {
       return res.json({
         status: 'ok',
         message: 'comment added',
+        idComment: comment._id,
       });
     }
     return res.json({
@@ -41,7 +42,7 @@ async function addComment(req, res, next) {
 }
 
 async function deleteComment(req, res, next) {
-  if (!user) {
+  if (!req.user) {
     return res.json({
       error: 1,
       message: `You're not not login or token expired`,

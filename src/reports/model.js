@@ -18,7 +18,7 @@ const reportSchema = Schema(
     address: {
       type: String,
       required: [true, 'alamat harus ada'],
-      minlength: 10,
+      minlength: 3,
     },
     latitude: {
       type: String,
@@ -29,13 +29,17 @@ const reportSchema = Schema(
     status: {
       type: String,
       enum: ['accepted', 'process', 'done', 'rejecected'],
-      default: "accepted",
+      default: 'accepted',
     },
     imageReport: [String],
-    user:{
-      type: Schema.Types.ObjectId
+    reporter: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
     },
-    imageFinished: [String],
+    officerReport: {
+      type: Schema.Types.ObjectId,
+      ref: 'OfficerReport',
+    },
     officer: {
       type: Schema.Types.ObjectId,
       ref: 'User',
@@ -48,6 +52,16 @@ const reportSchema = Schema(
     ],
   },
   { timeStamps: true },
+);
+
+reportSchema.path('imageReport').validate(
+  (value) => {
+    console.log(value.length);
+    if (!value.length) {
+      throw 'imageReport is required';
+    }
+  },
+  (attr) => `${attr.value} is required`,
 );
 
 module.exports = model('Report', reportSchema);

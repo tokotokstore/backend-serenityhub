@@ -18,6 +18,8 @@ Teknologi yang digunakan :
 
 ### Register
 
+#### User Register
+
 - URL : /register
 - Method : POST
 - Request Body:
@@ -33,7 +35,19 @@ Teknologi yang digunakan :
 }
 ```
 
+#### Officer or Admin register
+
+- URL : /officer/login
+- Method : POST
+- Request Body:
+  - name as string
+  - email as string
+  - password as string
+- Response: same User login
+
 ### Login
+
+#### User Login
 
 - URL : /login
 - Method : POST
@@ -81,28 +95,35 @@ Teknologi yang digunakan :
 ```
 
 ### Report
-> fitur masih sederhana, 
-#### Buat Laporan
+
+> fitur masih sederhana,
+
+#### Add Report
+
 - URL : /report
 - Method : POST
 - Request Header:
   - Authorization : 'Bearer {token}'
-- Request Body  :
+- Request Body :
   - title as string
   - description as string
   - address as string
   - longitude as string
   - latitude as string
+  - > nama file image didapatkan setelah upload POST /upload/image
+  - imageReport as array, ex: imageReport: ['image1.png', 'image2.png']
 - Response:
 
 ```json
 {
-    "status": "ok",
-    "message": "Report berhasil dibuat",
-    "data": "655e0f1cd6070a1f3e8d90c3"
+  "status": "ok",
+  "message": "report sent successfully",
+  "idReport": "656257fbf7b002c7f1d94882"
 }
 ```
-#### Mengambil Semua Laporan
+
+#### Get All Report
+
 - URL : /report
 - Method : GET
 - Response:
@@ -110,78 +131,59 @@ Teknologi yang digunakan :
 ```json
 {
   "status": "ok",
+  "count": 2,
   "data": [
     {
+      "_id": "6562532edbb6d68ff78cfac1",
+      "title": "asdas",
+      "description": "sdasdas",
       "status": "accepted",
-      "imageReport": [],
-      "_id": "655de8a5739a37314d7781f0",
-      "judul": "pohon rubuh",
-      "description": "terjadi pohon rubuh"
+      "imageReport": ["aaaa.png, adasda.jpeg"]
     },
     {
-      "_id": "655df6b6e876881d293b0bea",
-      "title": "Banyak sampah",
-      "description": "Sampah menumpuk di perumahan ABC",
+      "_id": "6562536e8e7fe4b62348f2ca",
+      "title": "asdas",
+      "description": "sdasdas",
       "status": "accepted",
-      "imageReport": [],
-      "user": "655dd130af1f0cfe7cdb02d1",
-      "__v": 0
-    },
-    {
-      "_id": "655df76ec5dedaff680e80b5",
-      "title": "Banyak sampah",
-      "description": "Sampah menumpuk di perumahan ABC",
-      "status": "accepted",
-      "imageReport": [],
-      "user": "655dd130af1f0cfe7cdb02d1",
-      "__v": 0
+      "imageReport": ["aaaa.png, adasda.jpeg"]
     }
   ]
 }
 ```
-#### Detail Laporan
+
+#### Detail Report
+
 - URL : /report/idreport
 - Method : GET
-Request Header:
+  Request Header:
   - Authorization : 'Bearer {token}'
 - Response:
 
 ```json
 {
   "status": "ok",
-  "data": [
-    {
-      "status": "accepted",
-      "imageReport": [],
-      "_id": "655de8a5739a37314d7781f0",
-      "judul": "pohon rubuh",
-      "description": "terjadi pohon rubuh"
+  "data": {
+    "_id": "6562540261b8dd6a5b1a33c6",
+    "title": "asdas",
+    "description": "sdasdas",
+    "address": "asdhiadiahsdas",
+    "latitude": "2131232131",
+    "longitude": "12312312321",
+    "status": "accepted",
+    "imageReport": ["aaaa.png", "adasda.jpeg"],
+    "reporter": {
+      "_id": "6561f6e523a7d6759c1fc30a",
+      "name": "john"
     },
-    {
-      "_id": "655df6b6e876881d293b0bea",
-      "title": "Banyak sampah",
-      "description": "Sampah menumpuk di perumahan ABC",
-      "status": "accepted",
-      "imageReport": [],
-      "user": "655dd130af1f0cfe7cdb02d1",
-      "__v": 0
-    },
-    {
-      "_id": "655df76ec5dedaff680e80b5",
-      "title": "Banyak sampah",
-      "description": "Sampah menumpuk di perumahan ABC",
-      "status": "accepted",
-      "imageReport": [],
-      "user": "655dd130af1f0cfe7cdb02d1",
-      "__v": 0
-    }
-  ]
+    "comment": []
+  }
 }
 ```
 
 ### Comment
 
-#### Tambah Komentar
+#### Add Comment
+
 - URL : /comment/:id
 - Method : POST
 - Request Header:
@@ -193,7 +195,8 @@ Request Header:
 ```json
 {
   "status": "ok",
-  "message": "comment added"
+  "message": "comment added",
+  "idComment": "656260b7b519a070bd0f7589"
 }
 ```
 
@@ -218,3 +221,64 @@ Request Header:
   }
 }
 ```
+
+#### Delete Comment
+
+- URL : /comment/:id
+- Method : DELETE
+- Request Header:
+  - Authorization : 'Bearer {token}'
+- Response :
+
+```json
+{
+  "status": "ok",
+  "message": "comment successfully deleted"
+}
+```
+
+### Upload Image
+
+- URL : /upload/image
+- Method : POST
+- Request Header:
+  - Authorization : 'Bearer {token}'
+- Request file:
+  - image as object
+  - In postman menu: body->form-data and key : image type file
+- Response:
+
+```json
+{
+  "status": "ok",
+  "message": "upload image success",
+  "image": "de8cf697c6262189568b42e28d264889.png"
+}
+```
+
+### Delete image
+
+- URL : /delete/image/:namefile
+- Method : DELETE
+- Request Header:
+  - Authorization : 'Bearer {token}'
+- Response:
+
+```json
+{
+  "status": "ok",
+  "message": "image deleted successfully"
+}
+```
+
+### Get Image
+
+- URL : /public/:name
+- Method : GET
+- Respone : Showing images
+
+### Download File
+
+- URL : /public/download/:name
+- Method : GET
+- Respone : Download start

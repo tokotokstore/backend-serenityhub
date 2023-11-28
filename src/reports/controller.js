@@ -1,4 +1,6 @@
 const ReportUser = require('./model');
+const path = require('path');
+const fs = require('fs');
 
 async function addReport(req, res, next) {
   if (!req.user) {
@@ -8,16 +10,41 @@ async function addReport(req, res, next) {
     });
   }
   try {
-    const payload = req.body;
     const user = req.user;
-    const newReport = new ReportUser({ ...payload, user: user._id });
+    const payload = req.body;
+
+    // const image = req.files;
+    // console.log(image);
+
+    // const imageString = [];
+    // if (image) {
+    //   for (let i = 0; i < image.length; i++) {
+    //     const target = path.join(
+    //       __dirname,
+    //       '../../public',
+    //       image[i].originalname,
+    //     );
+    //     const fileType = image[i].mimetype.substring(
+    //       image[i].mimetype.indexOf('/') + 1,
+    //     );
+
+    //     fs.renameSync(image[i].path, `${image[i].path}.${fileType}`);
+    //     imageString.push(`${image[i].filename}.${fileType}`);
+    //   }
+    //   console.log(imageString);
+    // }
+    const newReport = new ReportUser({
+      ...payload,
+      reporter: user._id,
+      // imageReport: imageString,
+    });
 
     await newReport.save();
     if (newReport) {
       return res.json({
         status: 'ok',
-        message: 'Laporan berhasil dibuat',
-        data: newReport._id,
+        message: 'report sent successfully',
+        idReport: newReport._id,
       });
     }
   } catch (err) {
@@ -33,6 +60,7 @@ async function addReport(req, res, next) {
 }
 
 async function getDetailReport(req, res, next) {
+  console.log(req.params.id);
   if (!req.user) {
     return res.json({
       error: 1,
@@ -40,10 +68,16 @@ async function getDetailReport(req, res, next) {
     });
   }
   try {
-    const report = await ReportUser.findOne({ _id: req.params.id }).populate({
-      path: 'comment',
-      select: ['message', 'name'],
-    });
+    const report = await ReportUser.findOne({ _id: req.params.id })
+      .populate({
+        path: 'comment',
+        select: ['message', 'name'],
+      })
+      .populate({
+        path: 'reporter',
+        select: ['_id', 'name'],
+      })
+      .select('-__v');
     if (report) {
       res.send({
         status: 'ok',
@@ -53,7 +87,7 @@ async function getDetailReport(req, res, next) {
   } catch (err) {
     return res.json({
       error: 1,
-      message: 'report tidak ada',
+      message: 'report not found',
     });
     next(err);
   }
@@ -61,15 +95,17 @@ async function getDetailReport(req, res, next) {
 
 async function getAllReport(req, res, next) {
   try {
+    const count = await ReportUser.find().countDocuments();
     const report = await ReportUser.find()
       .populate({
         path: 'comment',
         select: ['message', 'name'],
       })
-      .select('-imageFinished -comment  -address -longitude -latitude ');
+      .select('_id title status description imageReport -comment ');
     if (report) {
-      res.send({
+      res.json({
         status: 'ok',
+        count,
         data: report,
       });
     }

@@ -5,6 +5,33 @@ const bcrypt = require('bcrypt');
 const { getToken } = require('../utils/getToken');
 const config = require('../config');
 
+// Officer register
+
+async function officerRegister(req, res, next) {
+  try {
+    const payload = req.body;
+    let user = new User({ ...payload, role: 'officer' });
+    await user.save();
+    if (user) {
+      return res.json({
+        status: 'ok',
+        message: 'register successfuly',
+      });
+    }
+    // return res.json(user);
+  } catch (err) {
+    if (err && err.name === 'ValidationError') {
+      return res.json({
+        error: 1,
+        message: err.message,
+        fields: err.errors,
+      });
+    }
+    next(err);
+  }
+}
+
+// User register
 async function register(req, res, next) {
   try {
     const payload = req.body;
@@ -64,7 +91,7 @@ async function login(req, res, next) {
 
       //  hanya bisa login di satu perangkat, karena token hanya 1 saja
       { $set: { token: signed } },
-      { new: true }
+      { new: true },
     );
     return res.json({
       message: 'logged in successfully',
@@ -86,7 +113,11 @@ function me(req, res, next) {
 
 async function logout(req, res, next) {
   let token = getToken(req);
-  const user = await User.findOneAndUpdate({ token: { $in: [token] } }, { $pull: { token } }, { useFindAndModify: false });
+  const user = await User.findOneAndUpdate(
+    { token: { $in: [token] } },
+    { $pull: { token } },
+    { useFindAndModify: false },
+  );
   if (!user || !token) {
     return res.json({
       error: 1,
@@ -106,4 +137,5 @@ module.exports = {
   login,
   me,
   logout,
+  officerRegister,
 };
