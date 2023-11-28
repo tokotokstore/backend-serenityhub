@@ -320,7 +320,10 @@ Teknologi yang digunakan :
 - Method : POST
 - Request Header:
   - Authorization : 'Bearer {token}'
-- Authorization : Use account with role : officer, admin, or superadmin
+- Request Body:
+  - name as string
+  - image as string
+- Authorization : Use account with role : admin, or superadmin
 - Response:
 
 ```json
@@ -339,19 +342,39 @@ Teknologi yang digunakan :
   - Authorization : 'Bearer {token}'
 - Authorization : Use account with role : officer, admin, or superadmin
 - Response:
+
 ```json
 {
-    "status": "ok",
-    "message": "delete category successfully"
+  "status": "ok",
+  "message": "delete category successfully"
 }
 ```
-
 
 ### Office Report
 
 #### Add Officer Report
 
-- URL : /officer/category/:id
-- Method : DELETE
+- URL : /officer/category/:idReport
+- Method : POST
 - Request Header:
   - Authorization : 'Bearer {token}'
+  - level : officer
+- Request Body:
+  - message as string
+  - imageReport as array , example : imageReport : ['laporan1.png', 'laporan2.jpeg']
+- Response:
+
+```json
+{
+  "status": "ok",
+  "message": "report sent successfully",
+  "idReport": "65661ce311d235cd41b166f1"
+}
+```
+- Response Fail:
+```json
+{
+"error": 1,
+"message": "report not found"
+}
+```
