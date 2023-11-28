@@ -18,6 +18,8 @@ Teknologi yang digunakan :
 
 ### Register
 
+#### User Register
+
 - URL : /register
 - Method : POST
 - Request Body:
@@ -33,7 +35,19 @@ Teknologi yang digunakan :
 }
 ```
 
+#### Officer or Admin register
+
+- URL : /officer/register
+- Method : POST
+- Request Body:
+  - name as string
+  - email as string
+  - password as string
+- Response: same User login
+
 ### Login
+
+#### User Login
 
 - URL : /login
 - Method : POST
@@ -81,8 +95,6 @@ Teknologi yang digunakan :
 ```
 
 ### Report
-
-> fitur masih sederhana,
 
 #### Add Report
 
@@ -149,19 +161,22 @@ Teknologi yang digunakan :
 {
   "status": "ok",
   "data": {
-    "_id": "6562540261b8dd6a5b1a33c6",
-    "title": "asdas",
-    "description": "sdasdas",
-    "address": "asdhiadiahsdas",
+    "_id": "65635bc140dbaa8363504d01",
+    "title": "Pohon rubuh",
+    "description": "ada pohon rubuh dipinggir jalan",
+    "address": "jl. kemerdekaan 12",
     "latitude": "2131232131",
     "longitude": "12312312321",
     "status": "accepted",
-    "imageReport": ["aaaa.png", "adasda.jpeg"],
+    "imageReport": ["foto1.png", "adasda.jpeg"],
+    "category": "Pohon",
     "reporter": {
       "_id": "6561f6e523a7d6759c1fc30a",
       "name": "john"
     },
-    "comment": []
+    "comment": [],
+    "createdAt": "2023-11-26T14:52:49.011Z",
+    "updatedAt": "2023-11-26T14:52:49.011Z"
   }
 }
 ```
@@ -248,9 +263,6 @@ Teknologi yang digunakan :
 - Method : DELETE
 - Request Header:
   - Authorization : 'Bearer {token}'
-- Request file:
-  - image as object
-  - In postman menu: body->form-data and key : image type file
 - Response:
 
 ```json
@@ -262,7 +274,7 @@ Teknologi yang digunakan :
 
 ### Get Image
 
-- URL : /public/:name
+- URL : /public/image/:name
 - Method : GET
 - Respone : Showing images
 
@@ -271,3 +283,98 @@ Teknologi yang digunakan :
 - URL : /public/download/:name
 - Method : GET
 - Respone : Download start
+
+### Category
+
+#### Get Category
+
+- URL : /category
+- Method : GET
+- Response:
+
+```json
+{
+  "status": "ok",
+  "data": [
+    {
+      "name": "pendidikan",
+      "image": "\"pendidikan.png\"",
+      "createdAt": "2023-11-26T15:11:18.199Z",
+      "updatedAt": "2023-11-26T15:11:18.199Z",
+      "category_id": 1
+    },
+    {
+      "name": "pendidikan",
+      "image": "\"pendidikan.png\"",
+      "createdAt": "2023-11-26T15:12:09.686Z",
+      "updatedAt": "2023-11-26T15:12:09.686Z",
+      "category_id": 2
+    }
+  ]
+}
+```
+
+#### Add Category
+
+- URL : /officer/category
+- Method : POST
+- Request Header:
+  - Authorization : 'Bearer {token}'
+- Request Body:
+  - name as string
+  - image as string
+- Authorization : Use account with role : admin, or superadmin
+- Response:
+
+```json
+{
+  "status": "ok",
+  "message": "add category sucessuflly",
+  "categoryId": "656366ec276d0b5b2f898648"
+}
+```
+
+#### Delete Category
+
+- URL : /officer/category/:id
+- Method : DELETE
+- Request Header:
+  - Authorization : 'Bearer {token}'
+- Authorization : Use account with role : officer, admin, or superadmin
+- Response:
+
+```json
+{
+  "status": "ok",
+  "message": "delete category successfully"
+}
+```
+
+### Office Report
+
+#### Add Officer Report
+
+- URL : /officer/category/:idReport
+- Method : POST
+- Request Header:
+  - Authorization : 'Bearer {token}'
+  - level : officer
+- Request Body:
+  - message as string
+  - imageReport as array , example : imageReport : ['laporan1.png', 'laporan2.jpeg']
+- Response:
+
+```json
+{
+  "status": "ok",
+  "message": "report sent successfully",
+  "idReport": "65661ce311d235cd41b166f1"
+}
+```
+- Response Fail:
+```json
+{
+"error": 1,
+"message": "report not found"
+}
+```

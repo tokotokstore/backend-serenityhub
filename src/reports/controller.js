@@ -60,7 +60,7 @@ async function addReport(req, res, next) {
 }
 
 async function getDetailReport(req, res, next) {
-  console.log(req.params.id);
+  // console.log(req.params.id);
   if (!req.user) {
     return res.json({
       error: 1,
@@ -79,7 +79,7 @@ async function getDetailReport(req, res, next) {
       })
       .select('-__v');
     if (report) {
-      res.send({
+      res.json({
         status: 'ok',
         data: report,
       });
@@ -101,7 +101,9 @@ async function getAllReport(req, res, next) {
         path: 'comment',
         select: ['message', 'name'],
       })
-      .select('_id title status description imageReport -comment ');
+      .select(
+        '_id title status description imageReport createdAt address -comment ',
+      );
     if (report) {
       res.json({
         status: 'ok',
