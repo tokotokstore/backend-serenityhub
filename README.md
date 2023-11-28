@@ -37,7 +37,7 @@ Teknologi yang digunakan :
 
 #### Officer or Admin register
 
-- URL : /officer/login
+- URL : /officer/register
 - Method : POST
 - Request Body:
   - name as string
@@ -345,3 +345,13 @@ Teknologi yang digunakan :
     "message": "delete category successfully"
 }
 ```
+
+
+### Office Report
+
+#### Add Officer Report
+
+- URL : /officer/category/:id
+- Method : DELETE
+- Request Header:
+  - Authorization : 'Bearer {token}'
