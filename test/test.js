@@ -9,7 +9,7 @@ const Report = require('../src/reports/model');
 chai.use(chaiHttp);
 
 let token;
-let data = '';
+let idReport = '';
 
 describe('API Endpoints', function () {
   this.timeout(50000);
@@ -136,10 +136,10 @@ describe('API Endpoints', function () {
             }
             if (res.body.message === undefined) {
               errors.push('Properti message tidak ada dalam respons');
-            } else if (res.body.message !== 'Laporan berhasil dibuat') {
-              errors.push(`Properti message dalam respons bukan "Laporan berhasil dibuat", tetapi "${res.body.message}"`);
+            } else if (res.body.message !== 'report sent successfully') {
+              errors.push(`Properti message dalam respons bukan "report sent successfully", tetapi "${res.body.message}"`);
             }
-            if (res.body.data === undefined) {
+            if (res.body.idReport === undefined) {
               errors.push('Properti idReport/Data tidak ada dalam respons');
             }
           }
@@ -149,7 +149,7 @@ describe('API Endpoints', function () {
           } else {
             console.log('- test Create Report berhasil');
           }
-          data = res.body.data;
+          idReport = res.body.idReport;
           done();
         });
     });
@@ -248,7 +248,7 @@ describe('API Endpoints', function () {
   function deleteReport(done) {
     chai
       .request(server)
-      .delete('/report/' + data)
+      .delete('/report/' + idReport)
       .set('Authorization', 'Bearer ' + token)
       .end((err, res) => {
         if (err) {
