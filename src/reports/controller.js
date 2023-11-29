@@ -38,7 +38,6 @@ async function addReport(req, res, next) {
 }
 
 async function getDetailReport(req, res, next) {
-  // console.log(req.params.id);
   if (!req.user) {
     return res.json({
       error: 1,
@@ -75,8 +74,57 @@ async function getDetailReport(req, res, next) {
 
 async function getAllReport(req, res, next) {
   try {
+    let { limit = 10, skip = 0, q = '' } = req.query;
+
+    let criteria = {};
+    if (q.length) {
+      criteria = {
+        ...criteria,
+        title: { $regex: `${q}`, $options: 'i' },
+      };
+    }
     const count = await ReportUser.find().countDocuments();
-    const report = await ReportUser.find()
+    const report = await ReportUser.find(criteria)
+      .limit(parseInt(limit))
+      .skip(parseInt(skip))
+      .populate({
+        path: 'comment',
+        select: ['message', 'name'],
+      })
+      .select(
+        '_id title status description imageReport createdAt address -comment ',
+      );
+    if (report) {
+      res.json({
+        status: 'ok',
+        count,
+        data: report,
+      });
+    }
+  } catch (err) {
+    return res.json({
+      error: 1,
+      message: err.message,
+    });
+    next(err);
+  }
+}
+
+async function getAllReportByUnitWorks(req, res, next) {
+  try {
+    let { limit = 10, skip = 0, q = '' } = req.query;
+
+    let criteria = { };
+    if (q.length) {
+      criteria = {
+        ...criteria,
+        title: { $regex: `${q}`, $options: 'i' },
+      };
+    }
+    const count = await ReportUser.find().countDocuments();
+    const report = await ReportUser.find(criteria)
+      .limit(parseInt(limit))
+      .skip(parseInt(skip))
       .populate({
         path: 'comment',
         select: ['message', 'name'],
@@ -109,7 +157,6 @@ async function editReportToProcess(req, res, next) {
   }
   try {
     const payload = req.body;
-    console.log(payload.unitwork);
     const userRole = req.user.role;
     if (userRole === 'user') {
       res.json({
@@ -141,4 +188,5 @@ module.exports = {
   getAllReport,
   addReport,
   editReportToProcess,
+  getAllReportByUnitWorks
 };

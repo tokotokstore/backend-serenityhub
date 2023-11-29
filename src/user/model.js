@@ -31,6 +31,10 @@ const userSchema = Schema(
     image: {
       type: String,
     },
+    unitWorks:{
+      type: Schema.Types.ObjectId,
+      ref:'userWorks'
+    },
     token: [String],
   },
   { timestamps: true },

@@ -40,9 +40,9 @@ const reportSchema = Schema(
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
-    unitWorks :{
+    unitWorks: {
       type: Schema.Types.ObjectId,
-      ref: "UnitWork"
+      ref: 'UnitWork',
     },
     officerReport: {
       type: Schema.Types.ObjectId,
@@ -60,7 +60,6 @@ const reportSchema = Schema(
 
 reportSchema.path('imageReport').validate(
   (value) => {
-    console.log(value.length);
     if (!value.length) {
       throw 'imageReport is required';
     }

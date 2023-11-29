@@ -134,6 +134,11 @@ Teknologi yang digunakan :
 
 - URL : /report
 - Method : GET
+- parameter:
+  - q = search
+  - l =limit
+  - skip = skip
+  - example : /report?q=banjir&limit=20
 - Response:
 
 ```json
@@ -188,6 +193,24 @@ Teknologi yang digunakan :
     "createdAt": "2023-11-26T14:52:49.011Z",
     "updatedAt": "2023-11-26T14:52:49.011Z"
   }
+}
+```
+
+#### Send Report to Unit Works
+
+- URL : /report/idreport
+- Method : PUT
+- Request Header:
+  - Authorization : 'Bearer {token}'
+- Request body:
+  - unitWorks as string
+- Request Level user : officer
+- Response:
+
+```json
+{
+  "status": "oke",
+  "message": "unit work has a job"
 }
 ```
 

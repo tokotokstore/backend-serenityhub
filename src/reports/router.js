@@ -21,4 +21,6 @@ router.put(
   reportController.editReportToProcess,
 );
 
+router.get('/officer/report',reportController.getAllReportByUnitWorks )
+
 module.exports = router;
