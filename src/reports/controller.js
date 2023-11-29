@@ -12,31 +12,9 @@ async function addReport(req, res, next) {
   try {
     const user = req.user;
     const payload = req.body;
-
-    // const image = req.files;
-    // console.log(image);
-
-    // const imageString = [];
-    // if (image) {
-    //   for (let i = 0; i < image.length; i++) {
-    //     const target = path.join(
-    //       __dirname,
-    //       '../../public',
-    //       image[i].originalname,
-    //     );
-    //     const fileType = image[i].mimetype.substring(
-    //       image[i].mimetype.indexOf('/') + 1,
-    //     );
-
-    //     fs.renameSync(image[i].path, `${image[i].path}.${fileType}`);
-    //     imageString.push(`${image[i].filename}.${fileType}`);
-    //   }
-    //   console.log(imageString);
-    // }
     const newReport = new ReportUser({
       ...payload,
       reporter: user._id,
-      // imageReport: imageString,
     });
 
     await newReport.save();
