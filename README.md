@@ -94,6 +94,16 @@ Teknologi yang digunakan :
 }
 ```
 
+#### Change Password
+
+- URL : /changepassword
+- Method : PUT
+- Request Header:
+  - Authorization : 'Bearer {token}'
+- Request body"
+  - oldPassword as string
+  - newPassword as string
+
 ### Report
 
 #### Add Report
