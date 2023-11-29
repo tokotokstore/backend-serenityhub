@@ -18,17 +18,15 @@ routers.get('/public/download/:name', (req, res) => {
 routers.get('/public/image/:name', async (req, res, next) => {
   const filename = `../public/${req.params.name}`;
   const checkImage = fs.existsSync(`public/${req.params.name}`);
-  console.log(checkImage);
   try {
     if (checkImage) {
       res.sendFile(path.join(__dirname, filename));
-      console.log('ada');
+    } else {
+      res.sendFile(path.join(__dirname, '../public/404/404-image.png'));
     }
-    res.sendFile(path.join(__dirname, '../public/404/404image.png'));
   } catch (error) {
-    res.sendFile(path.join(__dirname, '../public/404/404image.png'));
+    res.send(error);
   }
-  // res.sendFile(path.join(__dirname, '../public/404/404image.png'));
 });
 
 module.exports = routers;

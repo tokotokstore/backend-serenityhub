@@ -59,7 +59,7 @@ async function getCategory(req, res, next) {
 async function deleteCategory(req, res, next) {
   const userRole = req.user.role;
 
-  if (!req.user && userRole) {
+  if (!req.user && userRole === 'user') {
     return res.json({
       error: 1,
       message: `You're not not login or token expired`,

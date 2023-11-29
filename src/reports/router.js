@@ -15,5 +15,10 @@ const upload = multer({ dest: 'public', fileFilter: imageFilter });
 router.get('/report/:id', reportController.getDetailReport);
 router.get('/report', reportController.getAllReport);
 router.post('/report', upload.array('image', 3), reportController.addReport);
+router.put(
+  '/report/:id',
+  multer().none(),
+  reportController.editReportToProcess,
+);
 
 module.exports = router;
