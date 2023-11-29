@@ -8,9 +8,24 @@ const config = require('../config');
 // Officer register
 
 async function officerRegister(req, res, next) {
+  const payload = req.body;
+
+  if (req.user.role !== 'admin') {
+    res.json({
+      error: 1,
+      message: 'your not allowed access',
+    });
+  } else if (payload.role === 'admin') {
+    return res.json({
+      error: 1,
+      message: 'field role cant be same your account',
+    });
+  }
   try {
-    const payload = req.body;
-    let user = new User({ ...payload, role: 'officer' });
+    let user = new User({
+      ...payload,
+      unitWorks: payload.unitWorks,
+    });
     await user.save();
     if (user) {
       return res.json({

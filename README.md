@@ -196,6 +196,24 @@ Teknologi yang digunakan :
 }
 ```
 
+#### Send Report to Unit Works
+
+- URL : /report/idreport
+- Method : PUT
+- Request Header:
+  - Authorization : 'Bearer {token}'
+- Request body:
+  - unitWorks as string
+- Request Level user : officer
+- Response:
+
+```json
+{
+  "status": "oke",
+  "message": "unit work has a job"
+}
+```
+
 ### Comment
 
 #### Add Comment

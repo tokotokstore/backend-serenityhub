@@ -79,7 +79,6 @@ async function getUnitWork(req, res, nex) {
       error: 1,
       message: 'your not allowed access',
     });
-  } else {
   }
   try {
     const unitWork = await UnitWork.find();
