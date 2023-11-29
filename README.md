@@ -134,6 +134,11 @@ Teknologi yang digunakan :
 
 - URL : /report
 - Method : GET
+- parameter:
+  - q = search
+  - l =limit
+  - skip = skip
+  - example : /report?q=banjir&limit=20
 - Response:
 
 ```json
