@@ -350,11 +350,40 @@ Teknologi yang digunakan :
 }
 ```
 
-### Office Report
+### Unit Work
 
-#### Add Officer Report
+#### Add Unit work
 
-- URL : /officer/category/:idReport
+- URL : /officer/uniworkk
+- Method : POST
+- Request Header:
+  - Authorization : 'Bearer {token}'
+  - level : officer
+- Request Body:
+  - name as string
+  - detail as string
+  - image as string
+  -
+- Response:
+
+```json
+{
+  "status": "ok",
+  "message": "report sent successfully",
+  "idReport": "65661ce311d235cd41b166f1"
+}
+```
+
+- Response Fail:
+
+```json
+{
+  "error": 1,
+  "message": "report not found"
+}
+```
+
+- URL : /officer/unitwork/:idReport
 - Method : POST
 - Request Header:
   - Authorization : 'Bearer {token}'
@@ -367,14 +396,59 @@ Teknologi yang digunakan :
 ```json
 {
   "status": "ok",
-  "message": "report sent successfully",
-  "idReport": "65661ce311d235cd41b166f1"
+  "message": "add category sucessuflly",
+  "categoryId": "6566c7dad0b5a5beb0a1f71e"
 }
 ```
-- Response Fail:
+
+### Get all Unit Work
+
+- URL : /officer/unitwork
+- Method : GET
+- Request Header:
+  - Authorization : 'Bearer {token}'
+  - level : officer
+- Response:
+
 ```json
 {
-"error": 1,
-"message": "report not found"
+  "status": "ok",
+  "data": [
+    {
+      "_id": "6566c7bad0b5a5beb0a1f71a",
+      "name": "Dinas Lingkungan Hidup",
+      "detail": "",
+      "image": "dlh.png",
+      "people": null,
+      "createdAt": "2023-11-29T05:10:18.821Z",
+      "updatedAt": "2023-11-29T05:10:18.821Z",
+      "__v": 0
+    },
+    {
+      "_id": "6566c7dad0b5a5beb0a1f71e",
+      "name": "Dinas Lingkungan Hidup",
+      "detail": "",
+      "image": "dlh.png",
+      "people": null,
+      "createdAt": "2023-11-29T05:10:50.758Z",
+      "updatedAt": "2023-11-29T05:10:50.758Z",
+      "__v": 0
+    }
+  ]
+}
+```
+
+#### Delete Unit work
+
+- URL : /officer/unitwork/:id
+- Method : DELETE
+- Request Header:
+  - Authorization : 'Bearer {token}'
+- Response:
+
+```json
+{
+  "status": "ok",
+  "message": "delete unit work successfully"
 }
 ```
