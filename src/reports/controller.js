@@ -77,6 +77,8 @@ async function getDetailReport(req, res, next) {
         path: 'reporter',
         select: ['_id', 'name'],
       })
+      .populate('officerReport')
+      .populate({ path: 'unitWorks', select: ['_id ', 'name', 'image'] })
       .select('-__v');
     if (report) {
       res.json({
@@ -120,4 +122,45 @@ async function getAllReport(req, res, next) {
   }
 }
 
-module.exports = { getDetailReport, getAllReport, addReport };
+async function editReportToProcess(req, res, next) {
+  if (!req.user) {
+    return res.json({
+      error: 1,
+      message: `You're not not login or token expired`,
+    });
+  }
+  try {
+    const payload = req.body;
+    console.log(payload.unitwork);
+    const userRole = req.user.role;
+    if (userRole === 'user') {
+      res.json({
+        error: 1,
+        message: 'your not allowed access',
+      });
+    } else {
+      const report = await ReportUser.findOneAndUpdate(
+        { _id: req.params.id },
+        { $set: { unitWorks: payload.unitwork, status: 'process' } },
+      );
+      if (report) {
+        return res.json({
+          status: 'oke',
+          message: 'unit work has a job',
+        });
+      }
+    }
+  } catch (error) {
+    return res.json({
+      error: 1,
+      message: 'report id or unit work not found',
+    });
+  }
+}
+
+module.exports = {
+  getDetailReport,
+  getAllReport,
+  addReport,
+  editReportToProcess,
+};

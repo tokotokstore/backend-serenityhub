@@ -1,4 +1,4 @@
-const UnitWork = require("./model");
+const UnitWork = require('./model');
 
 async function addUnitWork(req, res, next) {
   if (!req.user) {
@@ -10,24 +10,24 @@ async function addUnitWork(req, res, next) {
   try {
     const payload = req.body;
     const userRole = req.user.role;
-    if (userRole === "user") {
+    if (userRole === 'user') {
       res.json({
         error: 1,
-        message: "your not allowed access",
+        message: 'your not allowed access',
       });
     } else {
       const newUnitWork = new UnitWork({ ...payload });
       await newUnitWork.save();
       if (newUnitWork) {
         return res.json({
-          status: "ok",
-          message: "add category sucessuflly",
+          status: 'ok',
+          message: 'add category sucessuflly',
           categoryId: newUnitWork._id,
         });
       }
     }
   } catch (err) {
-    if (err && err.name === "ValidationError") {
+    if (err && err.name === 'ValidationError') {
       return res.json({
         error: 1,
         message: err.message,
@@ -48,50 +48,47 @@ async function deleteUnitWork(req, res, next) {
   try {
     const userRole = req.user.role;
 
-    if (userRole === "user") {
+    if (userRole === 'user') {
       res.json({
         error: 1,
-        message: "your not allowed access",
+        message: 'your not allowed access',
       });
     } else {
       let unitWork = await UnitWork.findOneAndDelete({ _id: req.params.id });
 
       if (unitWork) {
         return res.json({
-          status: "ok",
-          message: "delete unit work successfully",
+          status: 'ok',
+          message: 'delete unit work successfully',
         });
       }
     }
   } catch (err) {
     return res.json({
       error: 1,
-      message: "unit work not found",
+      message: 'unit work not found',
     });
   }
 }
 
 async function getUnitWork(req, res, nex) {
-
-    try {
-        const unitWork = await UnitWork.find()
-        if(unitWork){
-            return res.json({
-                status:'ok',
-                data: unitWork
-            })
-        }
-    } catch (err) {
-        
-    }
   const userRole = req.user.role;
 
-  if (userRole === "user") {
+  if (userRole === 'user') {
     res.json({
       error: 1,
-      message: "your not allowed access",
+      message: 'your not allowed access',
     });
   } else {
   }
+  try {
+    const unitWork = await UnitWork.find();
+    if (unitWork) {
+      return res.json({
+        status: 'ok',
+        data: unitWork,
+      });
+    }
+  } catch (err) {}
 }
-module.exports = { addUnitWork, deleteUnitWork,getUnitWork };
+module.exports = { addUnitWork, deleteUnitWork, getUnitWork };

@@ -28,8 +28,8 @@ const reportSchema = Schema(
     },
     status: {
       type: String,
-      enum: ['accepted', 'process', 'done', 'rejecected'],
-      default: 'accepted',
+      enum: ['waiting', 'process', 'done', 'rejecected'],
+      default: 'waiting',
     },
     imageReport: [String],
     category: {
