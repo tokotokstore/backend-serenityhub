@@ -28,9 +28,12 @@ const userSchema = Schema(
       enum: ['user', 'admin', 'officer', 'superadmin'],
       default: 'user',
     },
+    image: {
+      type: String,
+    },
     token: [String],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 userSchema.path('email').validate(
@@ -38,7 +41,7 @@ userSchema.path('email').validate(
     const EMAIL_RE = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     return EMAIL_RE.test(value);
   },
-  (attr) => `${attr.value} harus merupakan email yang valid`
+  (attr) => `${attr.value} harus merupakan email yang valid`,
 );
 
 userSchema.path('email').validate(
@@ -50,7 +53,7 @@ userSchema.path('email').validate(
       throw err;
     }
   },
-  (attr) => `${attr.value} sudah terdaftar`
+  (attr) => `${attr.value} sudah terdaftar`,
 );
 
 userSchema.pre('save', function (next) {
