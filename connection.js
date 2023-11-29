@@ -16,7 +16,7 @@ const mongodbAtlas = `mongodb://${maUser}:${maPassword}@${maServer}/${dbName}?re
 
 const localConnection = `mongodb://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}?authSource=admin`;
 
-mongoose.connect(localConnection, {
+mongoose.connect(mongodbAtlas, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
