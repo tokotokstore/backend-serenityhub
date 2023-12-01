@@ -48,7 +48,7 @@ async function getDetailReport(req, res, next) {
     const report = await ReportUser.findOne({ _id: req.params.id })
       .populate({
         path: 'comment',
-        select: ['message', 'name'],
+        select: ['message', 'name', 'createdAt'],
       })
       .populate({
         path: 'reporter',
@@ -74,7 +74,7 @@ async function getDetailReport(req, res, next) {
 
 async function getAllReport(req, res, next) {
   try {
-    let { limit = 10, skip = 0, q = '' } = req.query;
+    let { limit = 8, skip = 0, q = '' } = req.query;
 
     let criteria = {};
     if (q.length) {
@@ -112,9 +112,9 @@ async function getAllReport(req, res, next) {
 
 async function getAllReportByUnitWorks(req, res, next) {
   try {
-    let { limit = 10, skip = 0, q = '' } = req.query;
+    let { limit = 8, skip = 0, q = '' } = req.query;
 
-    let criteria = { };
+    let criteria = {};
     if (q.length) {
       criteria = {
         ...criteria,
@@ -158,7 +158,7 @@ async function editReportToProcess(req, res, next) {
   try {
     const payload = req.body;
     const userRole = req.user.role;
-    if (userRole === 'user') {
+    if (!userRole === 'admin') {
       res.json({
         error: 1,
         message: 'your not allowed access',
@@ -183,10 +183,34 @@ async function editReportToProcess(req, res, next) {
   }
 }
 
+async function getAllReportCoordinate(req, res, nex) {
+  try {
+    const report = await ReportUser.find().select('latitude longitude _id');
+    if (report) {
+      return res.json({
+        status: 'ok',
+        message: 'list report and coordinate',
+        data: report,
+      });
+    } else {
+      return res.status(500).json({
+        error: 1,
+        message: 'error',
+      });
+    }
+  } catch (err) {
+    return res.json({
+      error: 1,
+      message: '',
+    });
+  }
+}
+
 module.exports = {
   getDetailReport,
   getAllReport,
   addReport,
   editReportToProcess,
-  getAllReportByUnitWorks
+  getAllReportByUnitWorks,
+  getAllReportCoordinate,
 };

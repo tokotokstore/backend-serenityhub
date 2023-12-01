@@ -21,6 +21,10 @@ router.put(
   reportController.editReportToProcess,
 );
 
-router.get('/officer/report',reportController.getAllReportByUnitWorks )
+router.get('/officer/report', reportController.getAllReportByUnitWorks);
+router.get(
+  '/officer/report/coordinates',
+  reportController.getAllReportCoordinate,
+);
 
 module.exports = router;
