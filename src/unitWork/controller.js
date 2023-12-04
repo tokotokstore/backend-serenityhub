@@ -72,15 +72,22 @@ async function deleteUnitWork(req, res, next) {
 }
 
 async function getUnitWork(req, res, nex) {
-  const userRole = req.user.role;
-
-  if (userRole === 'user') {
-    res.json({
+  if (!req.user) {
+    return res.json({
       error: 1,
-      message: 'your not allowed access',
+      message: `You're not not login or token expired`,
     });
   }
+
   try {
+    const userRole = req.user.role;
+
+    if (userRole === 'user') {
+      res.json({
+        error: 1,
+        message: 'your not allowed access',
+      });
+    }
     const unitWork = await UnitWork.find();
     if (unitWork) {
       return res.json({
@@ -88,6 +95,6 @@ async function getUnitWork(req, res, nex) {
         data: unitWork,
       });
     }
-  } catch (err) {}
+  } catch (error) {}
 }
 module.exports = { addUnitWork, deleteUnitWork, getUnitWork };
