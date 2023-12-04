@@ -83,7 +83,7 @@ async function getAllReport(req, res, next) {
         title: { $regex: `${q}`, $options: 'i' },
       };
     }
-    const count = await ReportUser.find().countDocuments();
+    const count = await ReportUser.find(criteria).countDocuments();
     const report = await ReportUser.find(criteria)
       .limit(parseInt(limit))
       .skip(parseInt(skip))
@@ -124,9 +124,7 @@ async function getAllReportByUnitWorks(req, res, next) {
       };
     }
     // console.log(req.user.unitWorks);
-    const count = await ReportUser.find({
-      unitWorks: req.params.id,
-    }).countDocuments();
+    const count = await ReportUser.find(criteria).countDocuments();
     const report = await ReportUser.find(criteria)
       .limit(parseInt(limit))
       .skip(parseInt(skip))
@@ -167,7 +165,7 @@ async function getAllReportByOfficer(req, res, next) {
         title: { $regex: `${q}`, $options: 'i' },
       };
     }
-    const count = await ReportUser.find({ criteria }).countDocuments();
+    const count = await ReportUser.find(criteria).countDocuments();
     const report = await ReportUser.find(criteria)
       .limit(parseInt(limit))
       .skip(parseInt(skip))
