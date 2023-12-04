@@ -10,6 +10,7 @@ async function addReport(req, res, next) {
   }
   try {
     const payload = req.body;
+    console.log(payload);
     const user = req.user;
     if (user.role === 'user') {
       res.json({

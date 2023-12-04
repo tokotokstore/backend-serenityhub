@@ -28,7 +28,7 @@ const reportSchema = Schema(
     },
     status: {
       type: String,
-      enum: ['waiting', 'process', 'done', 'rejecected'],
+      enum: ['Menunggu', 'Diproses', 'Selesai', 'Ditolak'],
       default: 'waiting',
     },
     imageReport: [String],

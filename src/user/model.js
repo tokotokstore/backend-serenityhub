@@ -31,9 +31,9 @@ const userSchema = Schema(
     image: {
       type: String,
     },
-    unitWorks:{
+    unitWork:{
       type: Schema.Types.ObjectId,
-      ref:'userWorks'
+      ref:'unitWork'
     },
     token: [String],
   },
@@ -65,6 +65,6 @@ userSchema.pre('save', function (next) {
   next();
 });
 
-userSchema.plugin(AutoIncrement, { inc_field: 'customer_id' });
+userSchema.plugin(AutoIncrement, { inc_field: 'user_id' });
 
 module.exports = model('User', userSchema);
