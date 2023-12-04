@@ -114,14 +114,19 @@ async function getAllReportByUnitWorks(req, res, next) {
   try {
     let { limit = 8, skip = 0, q = '' } = req.query;
 
-    let criteria = {};
+    let criteria = {
+      unitWorks: req.params.id,
+    };
     if (q.length) {
       criteria = {
         ...criteria,
         title: { $regex: `${q}`, $options: 'i' },
       };
     }
-    const count = await ReportUser.find().countDocuments();
+    // console.log(req.user.unitWorks);
+    const count = await ReportUser.find({
+      unitWorks: req.params.id,
+    }).countDocuments();
     const report = await ReportUser.find(criteria)
       .limit(parseInt(limit))
       .skip(parseInt(skip))
@@ -130,7 +135,7 @@ async function getAllReportByUnitWorks(req, res, next) {
         select: ['message', 'name'],
       })
       .select(
-        '_id title status description imageReport createdAt address -comment ',
+        '_id title status description imageReport unitWorks createdAt address -comment ',
       );
     if (report) {
       res.json({
@@ -148,7 +153,48 @@ async function getAllReportByUnitWorks(req, res, next) {
   }
 }
 
-async function editReportToProcess(req, res, next) {
+async function getAllReportByOfficer(req, res, next) {
+  try {
+    let { limit = 8, skip = 0, q = '' } = req.query;
+    console.log(req.params.id);
+
+    let criteria = {
+      officerReport: req.params.id,
+    };
+    if (q.length) {
+      criteria = {
+        ...criteria,
+        title: { $regex: `${q}`, $options: 'i' },
+      };
+    }
+    const count = await ReportUser.find({ criteria }).countDocuments();
+    const report = await ReportUser.find(criteria)
+      .limit(parseInt(limit))
+      .skip(parseInt(skip))
+      .populate({
+        path: 'comment',
+        select: ['message', 'name'],
+      })
+      .select(
+        '_id title status description imageReport unitWorks createdAt address -comment ',
+      );
+    if (report) {
+      res.json({
+        status: 'ok',
+        count,
+        data: report,
+      });
+    }
+  } catch (err) {
+    return res.json({
+      error: 1,
+      message: err.message,
+    });
+    next(err);
+  }
+}
+
+async function assignReportToUnitWork(req, res, next) {
   if (!req.user) {
     return res.json({
       error: 1,
@@ -184,24 +230,37 @@ async function editReportToProcess(req, res, next) {
 }
 
 async function getAllReportCoordinate(req, res, nex) {
+  if (!req.user) {
+    return res.json({
+      error: 1,
+      message: `You're not not login or token expired`,
+    });
+  }
   try {
-    const report = await ReportUser.find().select('latitude longitude _id');
-    if (report) {
-      return res.json({
-        status: 'ok',
-        message: 'list report and coordinate',
-        data: report,
+    if (req.user.role !== 'admin') {
+      res.json({
+        error: 1,
+        message: 'your not allowed access',
       });
     } else {
-      return res.status(500).json({
-        error: 1,
-        message: 'error',
-      });
+      const report = await ReportUser.find().select('latitude longitude _id');
+      if (report) {
+        return res.json({
+          status: 'ok',
+          message: 'list report and coordinate',
+          data: report,
+        });
+      } else {
+        return res.status(500).json({
+          error: 1,
+          message: 'error',
+        });
+      }
     }
   } catch (err) {
     return res.json({
       error: 1,
-      message: '',
+      message: err,
     });
   }
 }
@@ -210,7 +269,8 @@ module.exports = {
   getDetailReport,
   getAllReport,
   addReport,
-  editReportToProcess,
+  assignReportToUnitWork,
   getAllReportByUnitWorks,
+  getAllReportByOfficer,
   getAllReportCoordinate,
 };

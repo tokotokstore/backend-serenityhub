@@ -17,6 +17,7 @@ routers.get('/public/download/:name', (req, res) => {
 
 routers.get('/public/image/:name', async (req, res, next) => {
   const filename = `../public/${req.params.name}`;
+  // console.log(req.params.name);
   const checkImage = fs.existsSync(`public/${req.params.name}`);
   try {
     if (checkImage) {

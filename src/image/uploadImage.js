@@ -56,7 +56,7 @@ router.post('/upload/image/multi', upload.array('image', 3), (req, res) => {
       fs.renameSync(image[i].path, `${image[i].path}.${fileType}`);
       imageName.push(`${image[i].filename}.${fileType}`);
     }
-    console.log(image);
+    // console.log(image);
     return res.json({
       status: 'ok',
       message: 'upload image successfuly',
