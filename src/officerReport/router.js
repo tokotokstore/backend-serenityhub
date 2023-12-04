@@ -3,7 +3,7 @@ const multer = require('multer');
 const officerReportController = require('./controller');
 
 router.post(
-  '/officer/report',
+  '/officer/report/:id',
   multer().none(),
   officerReportController.addReport,
 );

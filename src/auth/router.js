@@ -12,6 +12,7 @@ router.post('/register', multer().none(), controller.register);
 router.post('/login', multer().none(), controller.login);
 router.get('/me', controller.me);
 router.post('/logout', controller.logout);
+router.put('/changepassword', multer().none(), controller.changeUserPassword);
 
 router.post('/officer/register', multer().none(), controller.officerRegister);
 

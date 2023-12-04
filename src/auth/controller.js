@@ -8,9 +8,24 @@ const config = require('../config');
 // Officer register
 
 async function officerRegister(req, res, next) {
+  const payload = req.body;
+
+  if (req.user.role !== 'admin') {
+    res.json({
+      error: 1,
+      message: 'your not allowed access',
+    });
+  } else if (payload.role === 'admin') {
+    return res.json({
+      error: 1,
+      message: 'field role cant be same your account',
+    });
+  }
   try {
-    const payload = req.body;
-    let user = new User({ ...payload, role: 'officer' });
+    let user = new User({
+      ...payload,
+      unitWorks: payload.unitWorks,
+    });
     await user.save();
     if (user) {
       return res.json({
@@ -56,6 +71,43 @@ async function register(req, res, next) {
   }
 }
 
+async function changeUserPassword(req, res, next) {
+  if (!req.user) {
+    return res.json({
+      error: 1,
+      message: `You're not not login or token expired`,
+    });
+  }
+  try {
+    const { oldPassword, newPassword } = req.body;
+    const user = req.user;
+    const findUser = await User.findOne({ _id: user._id });
+    if (bcrypt.compareSync(oldPassword, findUser.password)) {
+      const setNewPassword = bcrypt.hashSync(newPassword, 10);
+      const updateUser = await User.findOneAndUpdate(
+        { _id: req.user._id },
+        { $set: { password: setNewPassword } },
+      );
+      if (updateUser) {
+        return res.json({
+          status: 'ok',
+          message: 'password has been changed',
+        });
+      }
+    } else {
+      return res.json({
+        error: 1,
+        message: 'change password failed',
+      });
+    }
+  } catch (err) {
+    return res.json({
+      error: 1,
+      message: 'change password failed',
+    });
+  }
+}
+
 async function localStrategy(email, password, done) {
   try {
     let user = await User.findOne({
@@ -94,6 +146,7 @@ async function login(req, res, next) {
       { new: true },
     );
     return res.json({
+      status: 'ok',
       message: 'logged in successfully',
       user: user,
       token: signed,
@@ -137,5 +190,6 @@ module.exports = {
   login,
   me,
   logout,
+  changeUserPassword,
   officerRegister,
 };

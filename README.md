@@ -37,7 +37,7 @@ Teknologi yang digunakan :
 
 #### Officer or Admin register
 
-- URL : /officer/login
+- URL : /officer/register
 - Method : POST
 - Request Body:
   - name as string
@@ -94,9 +94,17 @@ Teknologi yang digunakan :
 }
 ```
 
-### Report
+#### Change Password
 
-> fitur masih sederhana,
+- URL : /changepassword
+- Method : PUT
+- Request Header:
+  - Authorization : 'Bearer {token}'
+- Request body"
+  - oldPassword as string
+  - newPassword as string
+
+### Report
 
 #### Add Report
 
@@ -126,6 +134,11 @@ Teknologi yang digunakan :
 
 - URL : /report
 - Method : GET
+- parameter:
+  - q = search
+  - l =limit
+  - skip = skip
+  - example : /report?q=banjir&limit=20
 - Response:
 
 ```json
@@ -163,20 +176,41 @@ Teknologi yang digunakan :
 {
   "status": "ok",
   "data": {
-    "_id": "6562540261b8dd6a5b1a33c6",
-    "title": "asdas",
-    "description": "sdasdas",
-    "address": "asdhiadiahsdas",
+    "_id": "65635bc140dbaa8363504d01",
+    "title": "Pohon rubuh",
+    "description": "ada pohon rubuh dipinggir jalan",
+    "address": "jl. kemerdekaan 12",
     "latitude": "2131232131",
     "longitude": "12312312321",
     "status": "accepted",
-    "imageReport": ["aaaa.png", "adasda.jpeg"],
+    "imageReport": ["foto1.png", "adasda.jpeg"],
+    "category": "Pohon",
     "reporter": {
       "_id": "6561f6e523a7d6759c1fc30a",
       "name": "john"
     },
-    "comment": []
+    "comment": [],
+    "createdAt": "2023-11-26T14:52:49.011Z",
+    "updatedAt": "2023-11-26T14:52:49.011Z"
   }
+}
+```
+
+#### Send Report to Unit Works
+
+- URL : /report/idreport
+- Method : PUT
+- Request Header:
+  - Authorization : 'Bearer {token}'
+- Request body:
+  - unitWorks as string
+- Request Level user : officer
+- Response:
+
+```json
+{
+  "status": "oke",
+  "message": "unit work has a job"
 }
 ```
 
@@ -273,7 +307,7 @@ Teknologi yang digunakan :
 
 ### Get Image
 
-- URL : /public/:name
+- URL : /public/image/:name
 - Method : GET
 - Respone : Showing images
 
@@ -282,3 +316,172 @@ Teknologi yang digunakan :
 - URL : /public/download/:name
 - Method : GET
 - Respone : Download start
+
+### Category
+
+#### Get Category
+
+- URL : /category
+- Method : GET
+- Response:
+
+```json
+{
+  "status": "ok",
+  "data": [
+    {
+      "name": "pendidikan",
+      "image": "\"pendidikan.png\"",
+      "createdAt": "2023-11-26T15:11:18.199Z",
+      "updatedAt": "2023-11-26T15:11:18.199Z",
+      "category_id": 1
+    },
+    {
+      "name": "pendidikan",
+      "image": "\"pendidikan.png\"",
+      "createdAt": "2023-11-26T15:12:09.686Z",
+      "updatedAt": "2023-11-26T15:12:09.686Z",
+      "category_id": 2
+    }
+  ]
+}
+```
+
+#### Add Category
+
+- URL : /officer/category
+- Method : POST
+- Request Header:
+  - Authorization : 'Bearer {token}'
+- Request Body:
+  - name as string
+  - image as string
+- Authorization : Use account with role : admin, or superadmin
+- Response:
+
+```json
+{
+  "status": "ok",
+  "message": "add category sucessuflly",
+  "categoryId": "656366ec276d0b5b2f898648"
+}
+```
+
+#### Delete Category
+
+- URL : /officer/category/:id
+- Method : DELETE
+- Request Header:
+  - Authorization : 'Bearer {token}'
+- Authorization : Use account with role : officer, admin, or superadmin
+- Response:
+
+```json
+{
+  "status": "ok",
+  "message": "delete category successfully"
+}
+```
+
+### Unit Work
+
+#### Add Unit work
+
+- URL : /officer/uniworkk
+- Method : POST
+- Request Header:
+  - Authorization : 'Bearer {token}'
+  - level : officer
+- Request Body:
+  - name as string
+  - detail as string
+  - image as string
+  -
+- Response:
+
+```json
+{
+  "status": "ok",
+  "message": "report sent successfully",
+  "idReport": "65661ce311d235cd41b166f1"
+}
+```
+
+- Response Fail:
+
+```json
+{
+  "error": 1,
+  "message": "report not found"
+}
+```
+
+- URL : /officer/unitwork/:idReport
+- Method : POST
+- Request Header:
+  - Authorization : 'Bearer {token}'
+  - level : officer
+- Request Body:
+  - message as string
+  - imageReport as array , example : imageReport : ['laporan1.png', 'laporan2.jpeg']
+- Response:
+
+```json
+{
+  "status": "ok",
+  "message": "add category sucessuflly",
+  "categoryId": "6566c7dad0b5a5beb0a1f71e"
+}
+```
+
+### Get all Unit Work
+
+- URL : /officer/unitwork
+- Method : GET
+- Request Header:
+  - Authorization : 'Bearer {token}'
+  - level : officer
+- Response:
+
+```json
+{
+  "status": "ok",
+  "data": [
+    {
+      "_id": "6566c7bad0b5a5beb0a1f71a",
+      "name": "Dinas Lingkungan Hidup",
+      "detail": "",
+      "image": "dlh.png",
+      "people": null,
+      "createdAt": "2023-11-29T05:10:18.821Z",
+      "updatedAt": "2023-11-29T05:10:18.821Z",
+      "__v": 0
+    },
+    {
+      "_id": "6566c7dad0b5a5beb0a1f71e",
+      "name": "Dinas Lingkungan Hidup",
+      "detail": "",
+      "image": "dlh.png",
+      "people": null,
+      "createdAt": "2023-11-29T05:10:50.758Z",
+      "updatedAt": "2023-11-29T05:10:50.758Z",
+      "__v": 0
+    }
+  ]
+}
+```
+
+#### Delete Unit work
+
+- URL : /officer/unitwork/:id
+- Method : DELETE
+- Request Header:
+  - Authorization : 'Bearer {token}'
+- Response:
+
+```json
+{
+  "status": "ok",
+  "message": "delete unit work successfully"
+}
+```

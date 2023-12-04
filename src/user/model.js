@@ -28,9 +28,16 @@ const userSchema = Schema(
       enum: ['user', 'admin', 'officer', 'superadmin'],
       default: 'user',
     },
+    image: {
+      type: String,
+    },
+    unitWork:{
+      type: Schema.Types.ObjectId,
+      ref:'unitWork'
+    },
     token: [String],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 userSchema.path('email').validate(
@@ -38,7 +45,7 @@ userSchema.path('email').validate(
     const EMAIL_RE = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     return EMAIL_RE.test(value);
   },
-  (attr) => `${attr.value} harus merupakan email yang valid`
+  (attr) => `${attr.value} harus merupakan email yang valid`,
 );
 
 userSchema.path('email').validate(
@@ -50,7 +57,7 @@ userSchema.path('email').validate(
       throw err;
     }
   },
-  (attr) => `${attr.value} sudah terdaftar`
+  (attr) => `${attr.value} sudah terdaftar`,
 );
 
 userSchema.pre('save', function (next) {
@@ -58,6 +65,6 @@ userSchema.pre('save', function (next) {
   next();
 });
 
-userSchema.plugin(AutoIncrement, { inc_field: 'customer_id' });
+userSchema.plugin(AutoIncrement, { inc_field: 'user_id' });
 
 module.exports = model('User', userSchema);

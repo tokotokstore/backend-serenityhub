@@ -1,21 +1,23 @@
 const mongose = require('mongoose');
 const { model, Schema } = mongose;
 
-const officerReportSchema = Schema({
-  message: {
-    type: String,
-    minlength: 3,
+const officerReportSchema = Schema(
+  {
+    message: {
+      type: String,
+      minlength: 3,
+    },
+    imageReport: [String],
+    officer: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
   },
-  imageReport: [String],
-  officer: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-  },
-});
+  { timestamps: true },
+);
 
 officerReportSchema.path('imageReport').validate(
   (value) => {
-    console.log(value.length);
     if (!value.length) {
       throw 'imageReport is required';
     }

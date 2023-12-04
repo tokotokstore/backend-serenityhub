@@ -1,6 +1,15 @@
 const mongoose = require('mongoose');
 const config = require('./src/config');
-const { dbHost, dbName, dbPassword, dbPort, dbUser, maUser, maPassword, maServer } = config;
+const {
+  dbHost,
+  dbName,
+  dbPassword,
+  dbPort,
+  dbUser,
+  maUser,
+  maPassword,
+  maServer,
+} = config;
 
 mongoose.set('strictQuery', false);
 const mongodbAtlas = `mongodb://${maUser}:${maPassword}@${maServer}/${dbName}?replicaSet=atlas-munim4-shard-0&ssl=true&authSource=admin`;

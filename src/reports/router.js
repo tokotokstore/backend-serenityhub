@@ -15,5 +15,18 @@ const upload = multer({ dest: 'public', fileFilter: imageFilter });
 router.get('/report/:id', reportController.getDetailReport);
 router.get('/report', reportController.getAllReport);
 router.post('/report', upload.array('image', 3), reportController.addReport);
+// officer
+router.get('/officer/report/:id', reportController.getAllReportByUnitWorks);
+router.get('/officer/report/my/:id', reportController.getAllReportByOfficer);
+// admin
+router.put(
+  '/admin/report/assign/:id',
+  multer().none(),
+  reportController.assignReportToUnitWork,
+);
+router.get(
+  '/admin/report/coordinates',
+  reportController.getAllReportCoordinate,
+);
 
 module.exports = router;
