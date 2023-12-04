@@ -29,7 +29,7 @@ const reportSchema = Schema(
     status: {
       type: String,
       enum: ['Menunggu', 'Diproses', 'Selesai', 'Ditolak'],
-      default: 'waiting',
+      default: 'Menunggu',
     },
     imageReport: [String],
     category: {

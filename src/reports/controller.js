@@ -210,11 +210,11 @@ async function assignReportToUnitWork(req, res, next) {
     } else {
       const report = await ReportUser.findOneAndUpdate(
         { _id: req.params.id },
-        { $set: { unitWorks: payload.unitwork, status: 'process' } },
+        { $set: { unitWorks: payload.selectedOption, status: 'Diproses' } },
       );
       if (report) {
         return res.json({
-          status: 'oke',
+          status: 'ok',
           message: 'unit work has a job',
         });
       }
@@ -241,7 +241,9 @@ async function getAllReportCoordinate(req, res, nex) {
         message: 'your not allowed access',
       });
     } else {
-      const report = await ReportUser.find().select('latitude longitude _id');
+      const report = await ReportUser.find().select(
+        'latitude longitude _id status',
+      );
       if (report) {
         return res.json({
           status: 'ok',
