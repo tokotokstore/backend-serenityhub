@@ -1,6 +1,6 @@
 const User = require('./model');
 
-async function getOFficer(req, res, next) {
+async function getOfficer(req, res, next) {
   if (!req.user) {
     return res.json({
       error: 1,
@@ -47,5 +47,41 @@ async function getOFficer(req, res, next) {
     next(err);
   }
 }
+async function deleteOfficer(req, res, next) {
+  if (!req.user) {
+    return res.json({
+      error: 1,
+      message: `You're not not login or token expired`,
+    });
+  }
+  try {
+    const userRole = req.user.role;
+    if (!userRole === 'admin') {
+      res.json({
+        error: 1,
+        message: 'your not allowed access',
+      });
+    } else {
+      const deleteOfficer = await User.findOneAndDelete({ _id: req.params.id });
+      if (deleteOfficer) {
+        return res.json({
+          statu: 'oke',
+          message: 'Delete officer successfully',
+        });
+      } else {
+        return res.json({
+          error: 1,
+          message: 'Officer not found',
+        });
+      }
+    }
+  } catch (error) {
+    return res.json({
+      error: 1,
+      message: error,
+    });
+    next();
+  }
+}
 
-module.exports = { getOFficer };
+module.exports = { getOfficer,deleteOfficer };
