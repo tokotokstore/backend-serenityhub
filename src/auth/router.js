@@ -17,4 +17,6 @@ router.put('/changepassword', multer().none(), controller.changeUserPassword);
 // admin
 router.post('/officer/register', multer().none(), controller.officerRegister);
 
+router.post('/admin/register', multer().none(), controller.adminRegister);
+
 module.exports = router;

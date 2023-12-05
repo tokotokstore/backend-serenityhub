@@ -27,7 +27,7 @@ async function addReport(req, res, next) {
         await newOfficerReport.save();
         await ReportUser.findOneAndUpdate(
           { _id: req.params.id },
-          { $set: { officerReport: newOfficerReport._id, status: 'Selesai' } },
+          { $set: { officerReport: newOfficerReport._id, officer: req.user._id, status: 'Selesai' } },
         );
         if (newOfficerReport) {
           res.json({

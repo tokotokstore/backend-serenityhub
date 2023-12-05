@@ -40,6 +40,40 @@ async function officerRegister(req, res, next) {
     next(err);
   }
 }
+async function adminRegister(req, res, next) {
+  const payload = req.body;
+  const secret = config.secretKey;
+
+  if (payload.secretKey !== secret) {
+    res.json({
+      error: 1,
+      message: 'secret key wrong',
+    });
+  }
+  try {
+    let user = new User({
+      ...payload,
+      // unitWorks: payload.unitWorks,
+    });
+    await user.save();
+    if (user) {
+      return res.json({
+        status: 'ok',
+        message: 'register successfuly',
+      });
+    }
+    // return res.json(user);
+  } catch (err) {
+    if (err && err.name === 'ValidationError') {
+      return res.json({
+        error: 1,
+        message: err.message,
+        fields: err.errors,
+      });
+    }
+    next(err);
+  }
+}
 
 // User register
 async function register(req, res, next) {
@@ -187,4 +221,5 @@ module.exports = {
   logout,
   changeUserPassword,
   officerRegister,
+  adminRegister,
 };

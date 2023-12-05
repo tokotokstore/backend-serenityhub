@@ -75,11 +75,17 @@ async function getDetailReport(req, res, next) {
 async function getAllReport(req, res, next) {
   try {
     let { limit = 8, skip = 0, q = '', status = '' } = req.query;
-
     let criteria = {};
     if (q.length) {
       criteria = {
         ...criteria,
+        title: { $regex: `${q}`, $options: 'i' },
+      };
+    }
+    if (status.length) {
+      criteria = {
+        ...criteria,
+        status: status,
         title: { $regex: `${q}`, $options: 'i' },
       };
     }
@@ -112,18 +118,18 @@ async function getAllReport(req, res, next) {
 
 async function getAllReportByUnitWorks(req, res, next) {
   try {
-    let { limit = 8, skip = 0, q = '', status='' } = req.query;
+    let { limit = 8, skip = 0, q = '', status = '' } = req.query;
 
     let criteria = {
       unitWorks: req.params.id,
+      status: 'Diproses',
     };
-    if (q.length) {
+    if (q.length || status.length) {
       criteria = {
         ...criteria,
         title: { $regex: `${q}`, $options: 'i' },
       };
     }
-    // console.log(req.user.unitWorks);
     const count = await ReportUser.find(criteria).countDocuments();
     const report = await ReportUser.find(criteria)
       .limit(parseInt(limit))
@@ -153,19 +159,18 @@ async function getAllReportByUnitWorks(req, res, next) {
 
 async function getAllReportByOfficer(req, res, next) {
   try {
-    let { limit = 8, skip = 0, q = '', status='' } = req.query;
-    console.log(req.params.id);
-
+    let { limit = 8, skip = 0, q = '', status = '' } = req.query;
     let criteria = {
-      officerReport: req.params.id,
+      officer: req.params.id,
     };
-    if (q.length) {
+    if (q.length || status.length) {
       criteria = {
         ...criteria,
         title: { $regex: `${q}`, $options: 'i' },
       };
     }
     const count = await ReportUser.find(criteria).countDocuments();
+
     const report = await ReportUser.find(criteria)
       .limit(parseInt(limit))
       .skip(parseInt(skip))

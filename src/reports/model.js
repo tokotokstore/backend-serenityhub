@@ -48,6 +48,10 @@ const reportSchema = Schema(
       type: Schema.Types.ObjectId,
       ref: 'OfficerReport',
     },
+    officer: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
     comment: [
       {
         type: Schema.Types.ObjectId,
