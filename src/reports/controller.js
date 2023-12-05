@@ -74,7 +74,7 @@ async function getDetailReport(req, res, next) {
 
 async function getAllReport(req, res, next) {
   try {
-    let { limit = 8, skip = 0, q = '' } = req.query;
+    let { limit = 8, skip = 0, q = '', status = '' } = req.query;
 
     let criteria = {};
     if (q.length) {
@@ -112,7 +112,7 @@ async function getAllReport(req, res, next) {
 
 async function getAllReportByUnitWorks(req, res, next) {
   try {
-    let { limit = 8, skip = 0, q = '' } = req.query;
+    let { limit = 8, skip = 0, q = '', status='' } = req.query;
 
     let criteria = {
       unitWorks: req.params.id,
@@ -153,7 +153,7 @@ async function getAllReportByUnitWorks(req, res, next) {
 
 async function getAllReportByOfficer(req, res, next) {
   try {
-    let { limit = 8, skip = 0, q = '' } = req.query;
+    let { limit = 8, skip = 0, q = '', status='' } = req.query;
     console.log(req.params.id);
 
     let criteria = {

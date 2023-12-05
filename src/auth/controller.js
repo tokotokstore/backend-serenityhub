@@ -15,16 +15,11 @@ async function officerRegister(req, res, next) {
       error: 1,
       message: 'your not allowed access',
     });
-  } else if (payload.role === 'admin') {
-    return res.json({
-      error: 1,
-      message: 'field role cant be same your account',
-    });
   }
   try {
     let user = new User({
       ...payload,
-      unitWorks: payload.unitWorks,
+      // unitWorks: payload.unitWorks,
     });
     await user.save();
     if (user) {
