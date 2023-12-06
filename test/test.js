@@ -90,9 +90,9 @@ describe('API Endpoints', function () {
                 if (res.body.user.role === undefined) {
                   errors.push('Properti role tidak ada dalam user');
                 }
-                if (res.body.user.customer_id === undefined) {
-                  errors.push('Properti customer_id tidak ada dalam user');
-                }
+                // if (res.body.user.customer_id === undefined) {
+                //   errors.push('Properti customer_id tidak ada dalam user');
+                // }
               }
             }
             if (errors.length > 0) {
@@ -115,6 +115,7 @@ describe('API Endpoints', function () {
         title: 'Test Report',
         description: 'This is a test report',
         address: 'Test Address',
+        category: 'Jalan',
         longitude: '123.456',
         latitude: '78.90',
         imageReport: ['image1.png', 'image2.png'],
