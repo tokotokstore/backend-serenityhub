@@ -27,6 +27,11 @@ router.put(
 router.get(
   '/admin/report/coordinates',
   reportController.getAllReportCoordinate,
+);gi
+router.delete(
+  '/admin/report/delete/:id',
+  multer().none(),
+  reportController.deleteReport,
 );
 
 module.exports = router;

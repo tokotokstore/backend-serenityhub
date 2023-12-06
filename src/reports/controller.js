@@ -269,11 +269,42 @@ async function getAllReportCoordinate(req, res, nex) {
     });
   }
 }
+async function deleteReport(req, res, next) {
+  if (req.user.role !== 'admin') {
+    res.json({
+      error: 1,
+      message: 'your not allowed access',
+    });
+  }
+  try {
+    const deleteReport = await ReportUser.findByIdAndDelete({
+      _id: req.params.id,
+    });
+    if (deleteReport) {
+      return res.json({
+        status: 'ok',
+        message: 'delete successfull',
+      });
+    } else {
+      return res.json({
+        error: 1,
+        message: 'report not found',
+      });
+    }
+  } catch (error) {
+    return res.json({
+      error: 1,
+      message: error,
+    });
+  }
+  next();
+}
 
 module.exports = {
   getDetailReport,
   getAllReport,
   addReport,
+  deleteReport,
   assignReportToUnitWork,
   getAllReportByUnitWorks,
   getAllReportByOfficer,
