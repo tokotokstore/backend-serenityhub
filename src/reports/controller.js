@@ -300,6 +300,52 @@ async function deleteReport(req, res, next) {
   next();
 }
 
+async function getReportByUser(req,res,next){
+  if (!req.user) {
+    return res.json({
+      error: 1,
+      message: `You're not not login or token expired`,
+    });
+  }
+  try {
+    let { limit = 8, skip = 0, q = '', status = '' } = req.query;
+    let criteria = {
+      reporter: req.params.id,
+    };
+    if (q.length || status.length) {
+      criteria = {
+        ...criteria,
+        title: { $regex: `${q}`, $options: 'i' },
+      };
+    }
+    const count = await ReportUser.find(criteria).countDocuments();
+
+    const report = await ReportUser.find(criteria)
+      .limit(parseInt(limit))
+      .skip(parseInt(skip))
+      .populate({
+        path: 'comment',
+        select: ['message', 'name'],
+      })
+      .select(
+        '_id title status description imageReport unitWorks createdAt address -comment ',
+      );
+    if (report) {
+      res.json({
+        status: 'ok',
+        count,
+        data: report,
+      });
+    }
+  } catch (err) {
+    return res.json({
+      error: 1,
+      message: err.message,
+    });
+    next(err);
+  }
+}
+
 module.exports = {
   getDetailReport,
   getAllReport,
@@ -309,4 +355,5 @@ module.exports = {
   getAllReportByUnitWorks,
   getAllReportByOfficer,
   getAllReportCoordinate,
+  getReportByUser
 };

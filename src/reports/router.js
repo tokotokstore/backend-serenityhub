@@ -14,6 +14,8 @@ const upload = multer({ dest: 'public', fileFilter: imageFilter });
 
 router.get('/report/:id', reportController.getDetailReport);
 router.get('/report', reportController.getAllReport);
+router.get('/report/:id', reportController.getReportByUser);
+
 router.post('/report', upload.array('image', 3), reportController.addReport);
 // officer
 router.get('/officer/report/:id', reportController.getAllReportByUnitWorks);
@@ -27,7 +29,7 @@ router.put(
 router.get(
   '/admin/report/coordinates',
   reportController.getAllReportCoordinate,
-);gi
+);
 router.delete(
   '/admin/report/delete/:id',
   multer().none(),
