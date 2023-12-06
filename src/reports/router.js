@@ -14,7 +14,7 @@ const upload = multer({ dest: 'public', fileFilter: imageFilter });
 
 router.get('/report/:id', reportController.getDetailReport);
 router.get('/report', reportController.getAllReport);
-router.get('/report/:id', reportController.getReportByUser);
+router.get('/report/my/:id', reportController.getReportByUser);
 
 router.post('/report', upload.array('image', 3), reportController.addReport);
 // officer
