@@ -8,6 +8,7 @@ const routers = require('./src/routes');
 const app = express();
 const createError = require('http-errors');
 const cors = require('cors');
+const https = require('https');
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'default')));
@@ -49,5 +50,16 @@ app.use(officerReportRouter);
 app.use(reportCategoryRouter);
 app.use(uniWorkRouter);
 app.use(userRoute);
+
+// Setting for https
+// const options = {
+//   key: fs.readFileSync('/etc/letsencrypt/live/serenitylink.live/fullchain.pem;'),
+//   cert: fs.readFileSync('/etc/letsencrypt/live/serenitylink.live/privkey.pem;'),
+// };
+// const server = https.createServer(options, app);
+// server.listen(PORT, () => {
+//   console.log(`Server is running on https://localhost:${PORT}`);
+// });
+
 const server = app.listen(port, () => console.log(`server running at ${port}`));
 module.exports = server;
