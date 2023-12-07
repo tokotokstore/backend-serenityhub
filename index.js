@@ -53,8 +53,8 @@ app.use(userRoute);
 
 // Setting for https
 // const options = {
-//   key: fs.readFileSync('/etc/letsencrypt/live/serenitylink.live/fullchain.pem;'),
-//   cert: fs.readFileSync('/etc/letsencrypt/live/serenitylink.live/privkey.pem;'),
+//   key: fs.readFileSync('/etc/letsencrypt/live/serenitylink.live/fullchain.pem'),
+//   cert: fs.readFileSync('/etc/letsencrypt/live/serenitylink.live/privkey.pem'),
 // };
 // const server = https.createServer(options, app);
 // server.listen(PORT, () => {
