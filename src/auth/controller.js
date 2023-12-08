@@ -126,7 +126,7 @@ async function changeUserPassword(req, res, next) {
     } else {
       return res.json({
         error: 1,
-        message: 'change password failed',
+        message: 'Old password wrong',
       });
     }
   } catch (err) {
