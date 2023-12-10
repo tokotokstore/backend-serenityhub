@@ -29,7 +29,7 @@ const reportSchema = Schema(
     status: {
       type: String,
       enum: ['Menunggu', 'Diproses', 'Selesai', 'Ditolak'],
-      default: 'waiting',
+      default: 'Menunggu',
     },
     imageReport: [String],
     category: {
@@ -47,6 +47,10 @@ const reportSchema = Schema(
     officerReport: {
       type: Schema.Types.ObjectId,
       ref: 'OfficerReport',
+    },
+    officer: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
     },
     comment: [
       {

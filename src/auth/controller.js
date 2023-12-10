@@ -15,16 +15,45 @@ async function officerRegister(req, res, next) {
       error: 1,
       message: 'your not allowed access',
     });
-  } else if (payload.role === 'admin') {
-    return res.json({
+  }
+  try {
+    let user = new User({
+      ...payload,
+      // unitWorks: payload.unitWorks,
+    });
+    await user.save();
+    if (user) {
+      return res.json({
+        status: 'ok',
+        message: 'register successfuly',
+      });
+    }
+    // return res.json(user);
+  } catch (err) {
+    if (err && err.name === 'ValidationError') {
+      return res.json({
+        error: 1,
+        message: err.message,
+        fields: err.errors,
+      });
+    }
+    next(err);
+  }
+}
+async function adminRegister(req, res, next) {
+  const payload = req.body;
+  const secret = config.secretKey;
+
+  if (payload.secretKey !== secret) {
+    res.json({
       error: 1,
-      message: 'field role cant be same your account',
+      message: 'secret key wrong',
     });
   }
   try {
     let user = new User({
       ...payload,
-      unitWorks: payload.unitWorks,
+      // unitWorks: payload.unitWorks,
     });
     await user.save();
     if (user) {
@@ -97,7 +126,7 @@ async function changeUserPassword(req, res, next) {
     } else {
       return res.json({
         error: 1,
-        message: 'change password failed',
+        message: 'Old password wrong',
       });
     }
   } catch (err) {
@@ -192,4 +221,5 @@ module.exports = {
   logout,
   changeUserPassword,
   officerRegister,
+  adminRegister,
 };

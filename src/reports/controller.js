@@ -74,12 +74,18 @@ async function getDetailReport(req, res, next) {
 
 async function getAllReport(req, res, next) {
   try {
-    let { limit = 8, skip = 0, q = '' } = req.query;
-
+    let { limit = 8, skip = 0, q = '', status = '' } = req.query;
     let criteria = {};
     if (q.length) {
       criteria = {
         ...criteria,
+        title: { $regex: `${q}`, $options: 'i' },
+      };
+    }
+    if (status.length) {
+      criteria = {
+        ...criteria,
+        status: status,
         title: { $regex: `${q}`, $options: 'i' },
       };
     }
@@ -112,18 +118,18 @@ async function getAllReport(req, res, next) {
 
 async function getAllReportByUnitWorks(req, res, next) {
   try {
-    let { limit = 8, skip = 0, q = '' } = req.query;
+    let { limit = 8, skip = 0, q = '', status = '' } = req.query;
 
     let criteria = {
       unitWorks: req.params.id,
+      status: 'Diproses',
     };
-    if (q.length) {
+    if (q.length || status.length) {
       criteria = {
         ...criteria,
         title: { $regex: `${q}`, $options: 'i' },
       };
     }
-    // console.log(req.user.unitWorks);
     const count = await ReportUser.find(criteria).countDocuments();
     const report = await ReportUser.find(criteria)
       .limit(parseInt(limit))
@@ -153,19 +159,18 @@ async function getAllReportByUnitWorks(req, res, next) {
 
 async function getAllReportByOfficer(req, res, next) {
   try {
-    let { limit = 8, skip = 0, q = '' } = req.query;
-    console.log(req.params.id);
-
+    let { limit = 8, skip = 0, q = '', status = '' } = req.query;
     let criteria = {
-      officerReport: req.params.id,
+      officer: req.params.id,
     };
-    if (q.length) {
+    if (q.length || status.length) {
       criteria = {
         ...criteria,
         title: { $regex: `${q}`, $options: 'i' },
       };
     }
     const count = await ReportUser.find(criteria).countDocuments();
+
     const report = await ReportUser.find(criteria)
       .limit(parseInt(limit))
       .skip(parseInt(skip))
@@ -210,11 +215,11 @@ async function assignReportToUnitWork(req, res, next) {
     } else {
       const report = await ReportUser.findOneAndUpdate(
         { _id: req.params.id },
-        { $set: { unitWorks: payload.unitwork, status: 'process' } },
+        { $set: { unitWorks: payload.selectedOption, status: 'Diproses' } },
       );
       if (report) {
         return res.json({
-          status: 'oke',
+          status: 'ok',
           message: 'unit work has a job',
         });
       }
@@ -241,7 +246,9 @@ async function getAllReportCoordinate(req, res, nex) {
         message: 'your not allowed access',
       });
     } else {
-      const report = await ReportUser.find().select('latitude longitude _id');
+      const report = await ReportUser.find().select(
+        'latitude longitude _id status',
+      );
       if (report) {
         return res.json({
           status: 'ok',
@@ -262,13 +269,91 @@ async function getAllReportCoordinate(req, res, nex) {
     });
   }
 }
+async function deleteReport(req, res, next) {
+  if (req.user.role !== 'admin') {
+    res.json({
+      error: 1,
+      message: 'your not allowed access',
+    });
+  }
+  try {
+    const deleteReport = await ReportUser.findByIdAndDelete({
+      _id: req.params.id,
+    });
+    if (deleteReport) {
+      return res.json({
+        status: 'ok',
+        message: 'delete successfull',
+      });
+    } else {
+      return res.json({
+        error: 1,
+        message: 'report not found',
+      });
+    }
+  } catch (error) {
+    return res.json({
+      error: 1,
+      message: error,
+    });
+  }
+  next();
+}
+
+async function getReportByUser(req,res,next){
+  if (!req.user) {
+    return res.json({
+      error: 1,
+      message: `You're not not login or token expired`,
+    });
+  }
+  try {
+    let { limit = 8, skip = 0, q = '', status = '' } = req.query;
+    let criteria = {
+      reporter: req.params.id,
+    };
+    if (q.length || status.length) {
+      criteria = {
+        ...criteria,
+        title: { $regex: `${q}`, $options: 'i' },
+      };
+    }
+    const count = await ReportUser.find(criteria).countDocuments();
+
+    const report = await ReportUser.find(criteria)
+      .limit(parseInt(limit))
+      .skip(parseInt(skip))
+      .populate({
+        path: 'comment',
+        select: ['message', 'name'],
+      })
+      .select(
+        '_id title status description imageReport unitWorks createdAt address -comment ',
+      );
+    if (report) {
+      res.json({
+        status: 'ok',
+        count,
+        data: report,
+      });
+    }
+  } catch (err) {
+    return res.json({
+      error: 1,
+      message: err.message,
+    });
+    next(err);
+  }
+}
 
 module.exports = {
   getDetailReport,
   getAllReport,
   addReport,
+  deleteReport,
   assignReportToUnitWork,
   getAllReportByUnitWorks,
   getAllReportByOfficer,
   getAllReportCoordinate,
+  getReportByUser
 };
