@@ -300,7 +300,7 @@ async function deleteReport(req, res, next) {
   next();
 }
 
-async function getReportByUser(req,res,next){
+async function getReportByUser(req, res, next) {
   if (!req.user) {
     return res.json({
       error: 1,
@@ -312,9 +312,16 @@ async function getReportByUser(req,res,next){
     let criteria = {
       reporter: req.params.id,
     };
-    if (q.length || status.length) {
+    if (q.length) {
       criteria = {
         ...criteria,
+        title: { $regex: `${q}`, $options: 'i' },
+      };
+    }
+    if (status.length) {
+      criteria = {
+        ...criteria,
+        status: status,
         title: { $regex: `${q}`, $options: 'i' },
       };
     }
@@ -355,5 +362,5 @@ module.exports = {
   getAllReportByUnitWorks,
   getAllReportByOfficer,
   getAllReportCoordinate,
-  getReportByUser
+  getReportByUser,
 };
