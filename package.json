@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha test/test.js",
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "testDB": "mocha test/**/*.js",
     "backend": "node index.js",
-    "frontend": "cd frontend-serenityhub && npm run build && npm install && npm run dev",
+    "frontend": "cd frontend-serenityhub @ 0dcce0f && npm run build && npm install && npm run dev",
     "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
     "$schema": "https://railway.app/railway.schema.json"
   },
@@ -26,7 +26,6 @@
   "dependencies": {
     "assert": "^2.1.0",
     "bcrypt": "^5.0.1",
-    "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
