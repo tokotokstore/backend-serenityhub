@@ -12,7 +12,7 @@ const {
 } = config;
 
 mongoose.set('strictQuery', false);
-const mongodbAtlas = `mongodb://${maUser}:${maPassword}@${maServer}/${dbName}?replicaSet=atlas-munim4-shard-0&ssl=true&authSource=admin`;
+const mongodbAtlas = `mongodb://${maUser}:${maPassword}@monorail.proxy.rlwy.net:58932`;
 
 const localConnection = `mongodb://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}?authSource=admin`;
 
