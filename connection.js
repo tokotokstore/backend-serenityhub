@@ -12,11 +12,11 @@ const {
 } = config;
 
 mongoose.set('strictQuery', false);
-const mongodbAtlas = `mongodb://${maUser}:${maPassword}@${maServer}/${dbName}?replicaSet=atlas-munim4-shard-0&ssl=true&authSource=admin`;
+const mongodb = `mongodb://${maUser}:${maPassword}@monorail.proxy.rlwy.net:58932`;
 
 const localConnection = `mongodb://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}?authSource=admin`;
 
-mongoose.connect('mongodb+srv://asoyy:Android%401412@serenityhub.br70oht.mongodb.net/', {
+mongoose.connect(mongodb, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
