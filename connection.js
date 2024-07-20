@@ -15,8 +15,6 @@ mongoose.set('strictQuery', false);
 
 const mongodb = `mongodb://${maUser}:${maPassword}@monorail.proxy.rlwy.net:58932`;
 
-const localConnection = `mongodb://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}?authSource=admin`;
-
 mongoose.connect(mongodb, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
