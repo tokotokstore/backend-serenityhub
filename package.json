@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/doelkussoy/backend-serenityhub.git"
+    "url": "git+https://github.com/qoisabd/backend-serenityhub.git"
   },
   "keywords": [],
-  "author": "https://github.com/doelkussoy/backend-serenityhub",
+  "author": "https://github.com/qoisabd/backend-serenityhub",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/doelkussoy/backend-serenityhub/issues"
+    "url": "https://github.com/qoisabd/backend-serenityhub/issues"
   },
-  "homepage": "https://github.com/doelkussoy/backend-serenityhubk#readme",
+  "homepage": "https://github.com/qoisabd/backend-serenityhubk#readme",
   "dependencies": {
     "assert": "^2.1.0",
     "bcrypt": "^5.0.1",

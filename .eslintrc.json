@@ -9,6 +9,6 @@
     "ecmaVersion": "latest"
   },
   "rules": {
-    "no-useless-escape": "off",
+    "no-useless-escape": "off"
   }
 }
