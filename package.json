@@ -12,22 +12,6 @@
     "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
     "$schema": "https://railway.app/railway.schema.json"
   },
-  "build": {
-    "builder": "NIXPACKS",
-    "nixpacksPlan": {
-      "phases": {
-        "install": {
-          "cmds": [
-            "npm ci --omit=dev"
-          ]
-        }
-      }
-    }
-  },
-  "deploy": {
-    "restartPolicyType": "ON_FAILURE",
-    "restartPolicyMaxRetries": 5
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/qoisabd/backend-serenityhub.git"
