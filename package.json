@@ -8,7 +8,7 @@
     "start": "node index.js",
     "testDB": "mocha test/**/*.js",
     "backend": "nodemon index.js",
-    "frontend": "cd frontend-serenityhub && npm install && npm run dev",
+    "frontend": "cd frontend-serenityhub && npm run build && npm install && npm run dev",
     "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
     "$schema": "https://railway.app/railway.schema.json"
   },
