@@ -8,8 +8,24 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "testDB": "mocha test/**/*.js",
-    "build-client": "cd frontend-serenityhub && npm install && npm run build",
-    "build": "npm install && npm run build-client"
+    "build": "cd frontend-serenityhub && npm install && npm run build",
+    "$schema": "https://railway.app/railway.schema.json"
+  },
+  "build": {
+    "builder": "NIXPACKS",
+    "nixpacksPlan": {
+      "phases": {
+        "install": {
+          "cmds": [
+            "npm ci --omit=dev"
+          ]
+        }
+      }
+    }
+  },
+  "deploy": {
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 5
   },
   "repository": {
     "type": "git",
@@ -37,7 +53,8 @@
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.0.1",
     "passport": "^0.6.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "railway": "^2.0.17"
   },
   "devDependencies": {
     "chai": "^4.3.10",
