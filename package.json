@@ -8,8 +8,7 @@
     "start": "nodemon index.js",
     "testDB": "mocha test/**/*.js",
     "dev": "node index.js",
-    "lint": "eslint ."
-  },
+    "lint": "eslint ."  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/qoisabd/backend-serenityhub.git"

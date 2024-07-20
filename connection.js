@@ -12,11 +12,19 @@ const {
 } = config;
 
 mongoose.set('strictQuery', false);
+<<<<<<< HEAD
 const mongodb = `mongodb://${maUser}:${maPassword}@monorail.proxy.rlwy.net:58932`;
 
 const localConnection = `mongodb://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}?authSource=admin`;
 
 mongoose.connect(mongodb, {
+=======
+const mongodbAtlas = `mongodb://${maUser}:${maPassword}@monorail.proxy.rlwy.net:58932`;
+
+const localConnection = `mongodb://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}?authSource=admin`;
+
+mongoose.connect(mongodbAtlas, {
+>>>>>>> db25c4cad490ae3504b1bbbb3d1fe66a69fe0527
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

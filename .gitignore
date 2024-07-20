@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Node.js
 node_modules/
 npm-debug.log
@@ -33,3 +34,6 @@ logs/
 # OS generated files
 .DS_Store
 Thumbs.db
+=======
+node_modules
+>>>>>>> db25c4cad490ae3504b1bbbb3d1fe66a69fe0527
