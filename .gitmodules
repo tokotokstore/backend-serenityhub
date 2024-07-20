@@ -1,0 +1,3 @@
+[submodule "frontend-serenityhub"]
+	path = frontend-serenityhub
+	url = https://github.com/qoisabd/frontend-serenityhub.git
