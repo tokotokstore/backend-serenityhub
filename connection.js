@@ -13,18 +13,18 @@ const {
 
 mongoose.set('strictQuery', false);
 
-const mongodb = `mongodb://${maUser}:${maPassword}@monorail.proxy.rlwy.net:58932`;
+const mongodb = `mongodb://${maUser}:${maPassword}${maServer}`;
 
 mongoose.connect(mongodb, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }); 
 
-const mongodbAtlas = `mongodb://${maUser}:${maPassword}@${maServer};
+const mongo = `mongodb://${maUser}:${maPassword}@${maServer}`;
 
 const localConnection = `mongodb://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}?authSource=admin`;
 
-mongoose.connect(mongodbAtlas, {
+mongoose.connect(mongo, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
