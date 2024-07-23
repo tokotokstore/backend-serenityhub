@@ -6,9 +6,8 @@
   "scripts": {
     "test": "mocha test/test.js",
     "start": "node index.js",
-    "build": "tsc",
     "testDB": "mocha test/**/*.js",
-    "dev": "node index.js",
+    "dev": "nodemon index.js",
     "lint": "eslint ."
   },
   "repository": {
