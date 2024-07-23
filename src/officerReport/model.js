@@ -19,10 +19,10 @@ const officerReportSchema = Schema(
 officerReportSchema.path('imageReport').validate(
   (value) => {
     if (!value.length) {
-      throw 'imageReport is required';
+      throw 'Gambar tidak boleh kosong';
     }
   },
-  (attr) => `${attr.value} is required`,
+  (attr) => `${attr.value} tidak boleh kosong`,
 );
 
 module.exports = model('OfficerReport', officerReportSchema);

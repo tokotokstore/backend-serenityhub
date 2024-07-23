@@ -6,7 +6,7 @@ const path = require('path');
 
 const app = express();
 
-routers.get('/', (req, res) => res.send('halaman utama'));
+routers.get('/', (req, res) => res.send('Backend connect'));
 routers.get('/public/download/:name', (req, res) => {
   const filename = `../public/${req.params.name}`;
   if (path.existsSync(filename)) {

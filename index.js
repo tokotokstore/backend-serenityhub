@@ -15,8 +15,13 @@ app.use(express.static(path.join(__dirname, 'default')));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-const port = 5500;
 app.use(cors());
+
+app.use(cors({
+  origin: ['https://serenityhub.netlify.app/'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 const authRouter = require('./src/auth/router');
 const commentRouter = require('./src/comment/router');
