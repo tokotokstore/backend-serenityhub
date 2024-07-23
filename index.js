@@ -19,7 +19,7 @@ const port = 5500;
 app.use(cors());
 
 app.use(cors({
-  origin: ['https://serenityhub.netlify.app/'],
+  origin: ['https://serenityhub.netlify.app/', 'https://serenityhub.up.railway.app/'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
