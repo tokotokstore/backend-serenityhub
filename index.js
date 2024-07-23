@@ -2,7 +2,6 @@ require('./connection');
 
 const express = require('express');
 const fs = require('fs');
-const morgan = require('morgan');
 const path = require('path');
 const routers = require('./src/routes');
 const app = express();
@@ -17,12 +16,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const port = 5500;
 app.use(cors());
-
-app.use(cors({
-  origin: ['https://serenityhub.netlify.app/', 'https://serenityhub.up.railway.app/'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
 
 const authRouter = require('./src/auth/router');
 const commentRouter = require('./src/comment/router');
