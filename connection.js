@@ -20,7 +20,7 @@ mongoose.connect(mongodb, {
   useUnifiedTopology: true,
 }); 
 
-const mongodbAtlas = `mongodb://${maUser}:${maPassword}@monorail.proxy.rlwy.net:58932`;
+const mongodbAtlas = `mongodb://${maUser}:${maPassword}@${maServer};
 
 const localConnection = `mongodb://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}?authSource=admin`;
 
