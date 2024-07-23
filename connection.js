@@ -13,7 +13,7 @@ const {
 
 mongoose.set('strictQuery', false);
 
-const mongodb = `mongodb://${maUser}:${maPassword}${maServer}`;
+const mongodb = `mongodb://${maUser}:${maPassword}@${maServer}`;
 
 mongoose.connect(mongodb, {
   useNewUrlParser: true,
