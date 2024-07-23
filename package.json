@@ -23,6 +23,7 @@
   "homepage": "https://github.com/qoisabd/backend-serenityhubk#readme",
   "dependencies": {
     "assert": "^2.1.0",
+    "axios": "^1.7.2",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
