@@ -20,7 +20,7 @@ mongoose.connect(mongodb, {
   useUnifiedTopology: true,
 }); 
 
-const mongo = `mongodb://${maUser}:${maPassword}@${maServer}`;
+const mongo = `mongodb+srv://${maUser}:${maPassword}@${maServer}`;
 
 const localConnection = `mongodb://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}?authSource=admin`;
 
