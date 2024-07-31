@@ -12,19 +12,11 @@ const {
 } = config;
 
 mongoose.set('strictQuery', false);
-
-const mongodb = `mongodb://${maUser}:${maPassword}@${maServer}`;
-
-mongoose.connect(mongodb, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}); 
-
-const mongo = `mongodb+srv://${maUser}:${maPassword}@${maServer}`;
+const mongodbAtlas = `mongodb+srv://${maUser}:${maPassword}@${maServer}/`;
 
 const localConnection = `mongodb://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}?authSource=admin`;
 
-mongoose.connect(mongo, {
+mongoose.connect(mongodbAtlas, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
